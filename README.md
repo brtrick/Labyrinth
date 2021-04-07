@@ -13,8 +13,8 @@ In Quarto, users will be able to:
     1. view the board and pieces in 3D  
     2. use a mouse to select a piece for their opponent / place a piece on the board  
     3. see if their piece placement wins the game    
-    4. play against a computer opponent 
-    5. Bonus: graphic-based tutorial 
+    4. play against a computer opponent  
+    5. Bonus: graphic-based tutorial  
     6. Bonus: implement sockets with small backend to allow users to play over the web
 
 ## 3. Wireframe:

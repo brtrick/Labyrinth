@@ -5,6 +5,8 @@ const outputDir = "./dist";
 module.exports = {
   entry: path.resolve(__dirname, "src", "index.js"), 
   output: {
+    chunkLoading: false,
+    wasmLoading: false,
     path: path.join(__dirname, outputDir),
     filename: "main.js",
     publicPath: "/dist/",
