@@ -3,12 +3,12 @@ import { BufferGeometryUtils } from "three/examples/jsm/utils/BufferGeometryUtil
 
 const textureLoader = new THREE.TextureLoader ();
 // const texture = textureLoader.load("/src/assets/textures/bamboo-wood-semigloss-albedo.png");
-const texture = textureLoader.load("dist/assets/textures/ZebranoVeneer_512_albedo.png");
-const roughness = textureLoader.load("dist/assets/textures/ZebranoVeneer_512_roughness.png");
-const normal = textureLoader.load("dist/assets/textures/ZebranoVeneer_512_normal.png")
-const textureD = textureLoader.load("dist/assets/textures/Wenge_512_albedo.png");
-const roughnessD = textureLoader.load("dist/assets/textures/Wenge_512_roughness.png");
-const normalD = textureLoader.load("dist/assets/textures/Wenge_512_normal.png")
+const texture = textureLoader.load("dist/assets/ZebranoVeneer_512_albedo.png");
+const roughness = textureLoader.load("dist/assets/ZebranoVeneer_512_roughness.png");
+const normal = textureLoader.load("dist/assets/ZebranoVeneer_512_normal.png")
+const textureD = textureLoader.load("dist/assets/Wenge_512_albedo.png");
+const roughnessD = textureLoader.load("dist/assets/Wenge_512_roughness.png");
+const normalD = textureLoader.load("dist/assets/Wenge_512_normal.png")
 
 export default class Piece {
     constructor( dark, box, hollow, tall) {
