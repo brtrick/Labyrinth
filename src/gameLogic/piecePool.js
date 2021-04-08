@@ -1,5 +1,6 @@
 import Piece from "./piece"
 import * as THREE from "three";
+import Board from "./board"
 import {TrackballControls} from 'three/examples/jsm/controls/TrackballControls.js';
 
 export default class piecePool {
@@ -75,7 +76,7 @@ export default class piecePool {
         scene.add(dirLight);
         scene.background = new THREE.Color (0xffffff);
 
-        camera.position.set(2,3,1);
+        camera.position.set(2,3,10);
         
         const animate = function () {
             if (this.pool[index].selected)
