@@ -59,10 +59,10 @@ export default class piecePool {
     setScene(piece, li) {
         const index = li.dataset.idx;
         const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera( 75, 75 / 100, 2, 200 );
-        const renderer = new THREE.WebGLRenderer();
+        const camera = new THREE.PerspectiveCamera( 75, 100 / 100, 2, 200 );
+        const renderer = new THREE.WebGLRenderer({antialias: true});
         
-        renderer.setSize( 75, 100 );
+        renderer.setSize( 100, 100 );
         renderer.domElement.setAttribute('id', `scene${index}`);
         li.append( renderer.domElement );
             
@@ -74,9 +74,10 @@ export default class piecePool {
         dirLight.position.set(10,20,5);
         scene.add(ambientLight);
         scene.add(dirLight);
-        scene.background = new THREE.Color (0xffffff);
+        scene.background = new THREE.Color (0xd3d3d3);
+        // scene.background = new THREE.Color (0xffffff);
 
-        camera.position.set(2,3,10);
+        camera.position.set(10,9,7);
         
         const animate = function () {
             if (this.pool[index].selected)

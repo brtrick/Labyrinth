@@ -7,8 +7,7 @@ export default class Board {
     isGameWon (move) {
         if (this.rowWinner(move)) return true;
         if (this.columnWinner(move)) return true;
-        if (this.diagonalWinner(move)) return true;
-        return false;
+        return this.diagonalWinner(move);
     }
 
     rowWinner(move) {
