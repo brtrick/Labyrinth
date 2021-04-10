@@ -3,10 +3,12 @@ import "./styles/index.scss";
 import * as THREE from "three";
 import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls.js';
 import {TrackballControls} from 'three/examples/jsm/controls/TrackballControls.js';
-import piecePool from "./gameLogic/piecePool"
+import PiecePool from "./gameLogic/piecePool"
+import Board from "./gameLogic/board"
 
-const p = new piecePool();
+const p = new PiecePool();
 p.display();
+const b = new Board();
 
 
 // const scene = new THREE.Scene();
