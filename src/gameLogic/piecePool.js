@@ -1,4 +1,4 @@
-import Piece from "./piece"
+import Piece from "./piecexy"
 import * as THREE from "three";
 import Board from "./board"
 import {TrackballControls} from 'three/examples/jsm/controls/TrackballControls.js';

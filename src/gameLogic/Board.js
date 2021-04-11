@@ -1,6 +1,8 @@
-import Piece from "./piece"
+import Piece from "./piecexy";
+import PiecePool from "./piecePool";
 import * as THREE from "three";
 import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls.js';
+import {TrackballControls} from 'three/examples/jsm/controls/TrackballControls.js';
 import { BoxGeometry, PlaneGeometry, Vector4 } from "three";
 
 
@@ -13,6 +15,7 @@ export default class Board {
         this.camera = new THREE.PerspectiveCamera( 75, 100 / 100, 2, 200 );
         this.renderer = new THREE.WebGLRenderer({antialias: true});
         this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+        // this.controls = new TrackballControls(this.camera, this.renderer.domElement);
 
         this.initScene();
     }
@@ -101,7 +104,7 @@ export default class Board {
         // this.scene.background = new THREE.Color (0xd3d3d3);
         this.scene.background = new THREE.Color (0xffffff);
 
-        this.camera.position.set(0,0,5);
+        this.camera.position.set(1,-5,5);
         // this.camera.position.set(10,9,7);
         
         this.initBoard();
@@ -121,16 +124,28 @@ export default class Board {
         board.rotateZ(Math.PI/4);
         board.position.set(0, 0, -0.1001);
         // board.position.set(0,-.5, 0);
-        this.scene.add(board)
+        this.scene.add(board);
 
-        const unitSquare = new PlaneGeometry(1,1,1,1);
-        
         let uniforms = {
             innerColor: {type: 'vec3', value: new THREE.Color(0x800080)},
             borderColor: {type: 'vec3', value: new THREE.Color(0xbc8f8f)},
-            radius: {value: .4},
-            strokeWidth: {value: .05}
+            radius: {type: 'float', value: 1.05},
+            strokeWidth: {type:'float', value: .02}
         }
+        const boardCircleGeo = new PlaneGeometry(6, 6);
+        const boardCircle = new THREE.Mesh(boardCircleGeo, new THREE.ShaderMaterial({
+                    uniforms: uniforms,
+                    vertexShader: circleVertexShader(),
+                    fragmentShader: bigCircleFragmentShader()
+                })); 
+        boardCircle.rotateZ(Math.PI/4);
+        boardCircle.position.set(0, 0, 0);
+        this.scene.add(boardCircle);
+
+        const unitSquare = new PlaneGeometry(1,1,1,1);
+        
+        uniforms.radius.value = .4;
+        uniforms.strokeWidth.value = .05;
         let index = 0;
         for (let y = 1.5; y >= -1.5; y--) {
             for (let x = -1.5; x <=1.5; x++) {
@@ -147,6 +162,91 @@ export default class Board {
                 this.scene.add(square);
             }
         }
+
+        //Add pieces (testing)
+        const p = new PiecePool();
+        let piece = p.pool[0];
+        piece.model.position.set(-1.5, 1.5, (piece.tall ? .75 : .375));
+        this.scene.add(piece.model);
+        
+        piece = p.pool[1];
+        piece.model.position.set(-.5, 1.5, (piece.tall ? .75 : .375));
+        if (!piece.box) piece.model.rotateX(-Math.PI/2);
+        this.scene.add(piece.model);
+        
+        piece = p.pool[2];
+        piece.model.position.set(.5, 1.5, (piece.tall ? .75 : .375));
+        if (!piece.box) piece.model.rotateX(-Math.PI/2);
+        this.scene.add(piece.model);
+        
+        piece = p.pool[3];
+        piece.model.position.set(1.5, 1.5, (piece.tall ? .75 : .375));
+        if (!piece.box) piece.model.rotateX(-Math.PI/2);
+        this.scene.add(piece.model);
+        
+        piece = p.pool[4];
+        piece.model.position.set(-1.5, .5, (piece.tall ? .75 : .375));
+        if (!piece.box) piece.model.rotateX(-Math.PI/2);
+        this.scene.add(piece.model);
+        
+        piece = p.pool[5];
+        piece.model.position.set(-.5, .5, (piece.tall ? .75 : .375));
+        if (!piece.box) piece.model.rotateX(-Math.PI/2);
+        this.scene.add(piece.model);
+        
+        piece = p.pool[6];
+        piece.model.position.set(.5, .5, (piece.tall ? .75 : .375));
+        if (!piece.box) piece.model.rotateX(-Math.PI/2);
+        this.scene.add(piece.model);
+        
+        piece = p.pool[7];
+        piece.model.position.set(1.5, .5, (piece.tall ? .75 : .375));
+        if (!piece.box) piece.model.rotateX(-Math.PI/2);
+        this.scene.add(piece.model);
+        
+        piece = p.pool[8];
+        piece.model.position.set(-1.5, -.5, (piece.tall ? .75 : .375));
+        if (!piece.box) piece.model.rotateX(-Math.PI/2);
+        this.scene.add(piece.model);
+        
+        piece = p.pool[9];
+        piece.model.position.set(-.5, -.5, (piece.tall ? .75 : .375));
+        if (!piece.box) piece.model.rotateX(-Math.PI/2);
+        this.scene.add(piece.model);
+        
+        piece = p.pool[10];
+        piece.model.position.set(.5, -.5, (piece.tall ? .75 : .375));
+        if (!piece.box) piece.model.rotateX(-Math.PI/2);
+        this.scene.add(piece.model);
+        
+        piece = p.pool[11];
+        piece.model.position.set(1.5, -.5, (piece.tall ? .75 : .375));
+        if (!piece.box) piece.model.rotateX(-Math.PI/2);
+        this.scene.add(piece.model);
+        
+        piece = p.pool[12];
+        piece.model.position.set(-1.5, -1.5, (piece.tall ? .75 : .375));
+        if (!piece.box) piece.model.rotateX(-Math.PI/2);
+        this.scene.add(piece.model);
+        
+        piece = p.pool[13];
+        piece.model.position.set(-.5, -1.5, (piece.tall ? .75 : .375));
+        if (!piece.box) piece.model.rotateX(-Math.PI/2);
+        this.scene.add(piece.model);
+        
+        piece = p.pool[14];
+        piece.model.position.set(.5, -1.5, (piece.tall ? .75 : .375));
+        if (!piece.box) piece.model.rotateX(-Math.PI/2);
+        this.scene.add(piece.model);
+        
+        piece = p.pool[15];
+        piece.model.position.set(1.5, -1.5, (piece.tall ? .75 : .375));
+        if (!piece.box) piece.model.rotateX(-Math.PI/2);
+        this.scene.add(piece.model);
+
+        this.scene.rotateX(-Math.PI/2);
+        this.camera.position.set(1.7018, 5.07284, -2.976548);
+        
 
     }
 
@@ -184,18 +284,22 @@ const circleFragmentShader = function () {
         }
     `
 }
-//if ( d < radius) gl_FragColor = vec4(innerColor, 1.0);
+const bigCircleFragmentShader = function () {
+    return `
+        uniform vec3 borderColor;
+        uniform vec3 innerColor;
+        uniform float radius;
+        uniform float strokeWidth;
 
+        varying vec3 vUv;
 
-//(from Fragment Shader)
-// uniform vec3 borderColor;
-//         uniform vec3 innerColor;
-//         uniform float radius;
-//         uniform float strokeWidth;
+        void main() {
+            vec2 pos = abs(vUv.xy)/vec2 (6.0, 6.0);
 
-//         varying vec3 vUv;
-
-// const d = distance(vec2 (uVu.x, uVu.z), vec2 (.5, .5));
-//             if (d < radius.value) gl_FragColor = innerColor;
-//             else if (d < radius.value + strokeWidth.value) gl_FragColor = borderColor;
-//             else discard;
+            float d = distance(pos, vec2 (0, 0));
+            if ( d < radius +.05) discard;
+            else if (d < radius + .06) gl_FragColor = vec4(borderColor, 1.0);
+            else discard;
+        }
+    `
+}
