@@ -28,11 +28,15 @@ export default class Piece {
     }
 
     initModel() {
-        let geometry = this.box ?
-            new THREE.BoxGeometry(.5, .5, (this.tall ? 1.5 : 0.75)) :
-            // new THREE.BoxGeometry(3, 3, (this.tall ? 9 : 4.5)) :
-            new THREE.CylinderGeometry(.25, .25, (this.tall ? 1.5 : 0.75), 64);
-            // new THREE.CylinderGeometry(1.5, 1.5, (this.tall ? 9 : 4.5), 64);
+        // new THREE.BoxGeometry(3, 3, (this.tall ? 9 : 4.5)) :
+        // new THREE.CylinderGeometry(1.5, 1.5, (this.tall ? 9 : 4.5), 64);
+        let geometry;
+        if (this.box)
+            geometry = new THREE.BoxGeometry(.5, .5, (this.tall ? 1.5 : 0.75));
+        else {    
+            geometry = new THREE.CylinderGeometry(.25, .25, (this.tall ? 1.5 : 0.75), 64);
+            geometry.rotateX(-Math.PI/2);
+        }
         // if (this.hollow) {
         //     const sphereGeo = new THREE.SphereGeometry (.4, 200, 200, 0, Math.PI*2, Math.PI/2, Math.PI);
         //     sphereGeo.setAttribute("position", [0, (this.tall ? 3 : 1.5), 0]);

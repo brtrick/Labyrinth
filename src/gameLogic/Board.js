@@ -162,7 +162,8 @@ export default class Board {
                 this.scene.add(square);
             }
         }
-
+        this.scene.rotateX(-Math.PI/2);
+        
         //Add pieces (testing)
         const p = new PiecePool();
         let piece = p.pool[0];
@@ -171,80 +172,64 @@ export default class Board {
         
         piece = p.pool[1];
         piece.model.position.set(-.5, 1.5, (piece.tall ? .75 : .375));
-        if (!piece.box) piece.model.rotateX(-Math.PI/2);
         this.scene.add(piece.model);
         
         piece = p.pool[2];
         piece.model.position.set(.5, 1.5, (piece.tall ? .75 : .375));
-        if (!piece.box) piece.model.rotateX(-Math.PI/2);
         this.scene.add(piece.model);
         
         piece = p.pool[3];
         piece.model.position.set(1.5, 1.5, (piece.tall ? .75 : .375));
-        if (!piece.box) piece.model.rotateX(-Math.PI/2);
         this.scene.add(piece.model);
         
         piece = p.pool[4];
         piece.model.position.set(-1.5, .5, (piece.tall ? .75 : .375));
-        if (!piece.box) piece.model.rotateX(-Math.PI/2);
         this.scene.add(piece.model);
         
         piece = p.pool[5];
         piece.model.position.set(-.5, .5, (piece.tall ? .75 : .375));
-        if (!piece.box) piece.model.rotateX(-Math.PI/2);
         this.scene.add(piece.model);
         
         piece = p.pool[6];
         piece.model.position.set(.5, .5, (piece.tall ? .75 : .375));
-        if (!piece.box) piece.model.rotateX(-Math.PI/2);
         this.scene.add(piece.model);
         
         piece = p.pool[7];
         piece.model.position.set(1.5, .5, (piece.tall ? .75 : .375));
-        if (!piece.box) piece.model.rotateX(-Math.PI/2);
         this.scene.add(piece.model);
         
         piece = p.pool[8];
         piece.model.position.set(-1.5, -.5, (piece.tall ? .75 : .375));
-        if (!piece.box) piece.model.rotateX(-Math.PI/2);
         this.scene.add(piece.model);
         
         piece = p.pool[9];
         piece.model.position.set(-.5, -.5, (piece.tall ? .75 : .375));
-        if (!piece.box) piece.model.rotateX(-Math.PI/2);
         this.scene.add(piece.model);
         
         piece = p.pool[10];
         piece.model.position.set(.5, -.5, (piece.tall ? .75 : .375));
-        if (!piece.box) piece.model.rotateX(-Math.PI/2);
         this.scene.add(piece.model);
         
         piece = p.pool[11];
         piece.model.position.set(1.5, -.5, (piece.tall ? .75 : .375));
-        if (!piece.box) piece.model.rotateX(-Math.PI/2);
         this.scene.add(piece.model);
         
         piece = p.pool[12];
         piece.model.position.set(-1.5, -1.5, (piece.tall ? .75 : .375));
-        if (!piece.box) piece.model.rotateX(-Math.PI/2);
         this.scene.add(piece.model);
         
         piece = p.pool[13];
         piece.model.position.set(-.5, -1.5, (piece.tall ? .75 : .375));
-        if (!piece.box) piece.model.rotateX(-Math.PI/2);
         this.scene.add(piece.model);
         
         piece = p.pool[14];
         piece.model.position.set(.5, -1.5, (piece.tall ? .75 : .375));
-        if (!piece.box) piece.model.rotateX(-Math.PI/2);
         this.scene.add(piece.model);
         
         piece = p.pool[15];
         piece.model.position.set(1.5, -1.5, (piece.tall ? .75 : .375));
-        if (!piece.box) piece.model.rotateX(-Math.PI/2);
         this.scene.add(piece.model);
 
-        this.scene.rotateX(-Math.PI/2);
         this.camera.position.set(1.7018, 5.07284, -2.976548);
         
 
@@ -297,7 +282,7 @@ const bigCircleFragmentShader = function () {
             vec2 pos = abs(vUv.xy)/vec2 (6.0, 6.0);
 
             float d = distance(pos, vec2 (0, 0));
-            if ( d < radius +.05) discard;
+            if ( d < radius + .05) discard;
             else if (d < radius + .06) gl_FragColor = vec4(borderColor, 1.0);
             else discard;
         }
