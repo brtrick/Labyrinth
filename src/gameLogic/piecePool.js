@@ -60,6 +60,7 @@ export default class PiecePool {
             window.selectedPiece = this.pool[idx];
             const msg = document.getElementById("message");
             msg.innerHTML =  "Click on a board space to play the selected piece. (Hold mouse down and move to rotate board.)"  
+            // test to modify
         }   
     }
 
