@@ -109,7 +109,7 @@ export default class Board {
         for (let a = 0; a < 4; a++) {
             for (let i = columnOffset + 4; i < 16; i += 4) {
                 if (this.board[columnOffset][attributes[a]] !== this.board[i][attributes[a]]) break;
-                if (i === columnOffset+12) {
+                if (i === columnOffset + 12) {
                     this.winningAttribute = this.board[columnOffset][attributes[a]] ? attributes[a] : opposites[a];
                     this.markWin([columnOffset, columnOffset + 4, columnOffset + 8, columnOffset + 12]);
                     return true;

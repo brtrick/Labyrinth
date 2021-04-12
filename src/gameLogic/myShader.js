@@ -1,4 +1,4 @@
-const vertexShader = ;
+const vertexShader = "";
 const fragmentShader = '';
 
 const myMeshStandardMaterial = new THREE.ShaderMaterial({

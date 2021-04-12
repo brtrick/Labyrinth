@@ -1,6 +1,6 @@
 import Piece from "./piecexy"
 import * as THREE from "three";
-import Board from "./board"
+import Board from "./boardOld"
 import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls.js';
 
 export default class PiecePool {

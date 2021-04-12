@@ -4,7 +4,7 @@ import * as THREE from "three";
 import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls.js';
 import {TrackballControls} from 'three/examples/jsm/controls/TrackballControls.js';
 import PiecePool from "./gameLogic/piecePool"
-import Board from "./gameLogic/board"
+import Board from "./gameLogic/boardOld"
 
 window.quartoSelect = true;
 window.selectedPiece = null;
