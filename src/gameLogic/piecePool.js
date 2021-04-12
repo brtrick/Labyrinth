@@ -19,49 +19,32 @@ export default class PiecePool {
              }
         }
 
-        this.scene = new THREE.Scene();
-        this.scene.rotateX(-Math.PI/2);
-        this.camera = new THREE.PerspectiveCamera( 75, 100 / 100, 2, 200 );
-        this.renderer = new THREE.WebGLRenderer({antialias: true});
-        this.controls = new OrbitControls(this.camera, this.renderer.domElement);
-
         this.handleClick = this.handleClick.bind(this);
-        
-        this.display();
     }
 
     display() {
-        this.renderer.setSize( 400, 400 );
-        const piecePool = document.getElementById("piece-pool");
-        piecePool.append (this.renderer.domElement);
+        const ul = document.getElementById("piece-pool");
+        this.pool.forEach ((piece, idx) => {
 
-        this.setLights();
-        this.scene.background = new THREE.Color (0xd3d3d3);
-        for (let i= 0; i < 16; i++) {
-            this.pool[i].model.position.set(-1.5 + (i%4)*2, 1.5 - Math.floor(i/4), 0)
-              this.pool[i].model.rotateY(-Math.PI/2);
-            this.scene.add(this.pool[i].model);
-        }
-        this.camera.position.set(.24463,6.01908,-0.000281);
-        
-        const animate = function () {
-            // if (this.pool[index].selected)
-            //     this.scene.remove(this.pool[index].model);
-            // else 
-            requestAnimationFrame( animate.bind(this) );
-            this.controls.update();
-            this.renderer.render( this.scene, this.camera );
-        };
+            let li = document.createElement('li');
+            li.classList.add("piece-pool-item", `item${idx}`);
+            li.setAttribute("data-idx", `${idx}`);
 
-        animate.bind(this)();
-    }
+            // Create scene
+            this.setScene(piece, li);
+            
+            const button = document.createElement("button");
+            button.classList.add("select-button");
+            button.setAttribute("data-idx", `${idx}`);
+            button.setAttribute("type", "button");
+            button.setAttribute("id", `button${idx}`);
+            button.textContent = "Select";
+            button.addEventListener("click", this.handleClick);
+            li.append(button);
+            
 
-    setLights() {
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
-        const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
-        dirLight.position.set(10,20,5);
-        this.scene.add(ambientLight);
-        this.scene.add(dirLight);
+            ul.append(li);
+        });
     }
 
     handleClick(e) {
@@ -74,12 +57,24 @@ export default class PiecePool {
     }
 
     setScene(piece, li) {
+        const index = li.dataset.idx;
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera( 75, 100 / 100, 2, 200 );
+        const renderer = new THREE.WebGLRenderer({antialias: true});
         
-        
+        renderer.setSize( 100, 100 );
+        renderer.domElement.setAttribute('id', `scene${index}`);
+        li.append( renderer.domElement );
+            
+        const controls = new OrbitControls(camera, renderer.domElement);
         scene.add(piece.model);
 
-        
-        
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
+        const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
+        dirLight.position.set(10,20,5);
+        scene.add(ambientLight);
+        scene.add(dirLight);
+        scene.background = new THREE.Color (0xd3d3d3);
         // scene.background = new THREE.Color (0xffffff);
 
         camera.position.set(10,9,7);

@@ -7,7 +7,7 @@ import PiecePool from "./gameLogic/piecePool"
 import Board from "./gameLogic/board"
 
 const p = new PiecePool();
-// p.display();
+p.display();
 const b = new Board();
 
 
