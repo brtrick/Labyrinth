@@ -6,8 +6,8 @@ import {TrackballControls} from 'three/examples/jsm/controls/TrackballControls.j
 import PiecePool from "./gameLogic/piecePool"
 import Board from "./gameLogic/board"
 
-//const p = new PiecePool();
-//p.display();
+const p = new PiecePool();
+// p.display();
 const b = new Board();
 
 
