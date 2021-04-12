@@ -20,6 +20,7 @@ export default class PiecePool {
         }
 
         this.scene = new THREE.Scene();
+        this.scene.rotateX(-Math.PI/2);
         this.camera = new THREE.PerspectiveCamera( 75, 100 / 100, 2, 200 );
         this.renderer = new THREE.WebGLRenderer({antialias: true});
         this.controls = new OrbitControls(this.camera, this.renderer.domElement);
@@ -37,10 +38,11 @@ export default class PiecePool {
         this.setLights();
         this.scene.background = new THREE.Color (0xd3d3d3);
         for (let i= 0; i < 16; i++) {
-            this.pool[i].model.position.set(50+100*(i%4), 50+100*(Math.floor(i/4)), (this.pool[i].tall ? .75 : .375))
+            this.pool[i].model.position.set(-1.5 + (i%4)*2, 1.5 - Math.floor(i/4), 0)
+              this.pool[i].model.rotateY(-Math.PI/2);
             this.scene.add(this.pool[i].model);
         }
-        this.camera.position.set(10,9,7);
+        this.camera.position.set(.24463,6.01908,-0.000281);
         
         const animate = function () {
             // if (this.pool[index].selected)
