@@ -18,28 +18,32 @@ export default class Board {
 
         this.currentPiece = null;
         this.handleClick = this.handleClick.bind(this);
-        this.handleMouse = this.handleMouseMove.bind(this);
+        // this.handleMouse = this.handleMouseMove.bind(this);
         
         this.initScene();
+        this.renderer.domElement.addEventListener('click', this.handleClick);
+        // this.renderer.domElement.addEventListener('mousemove', this.handleMouseMove);
+
 
         // test
-         const p = new PiecePool();
-         this.makeMove(p.pool[0]);
-         this.makeMove(p.pool[1]);
+        //  const p = new PiecePool();
+        //  this.makeMove(p.pool[0]);
+        //  this.makeMove(p.pool[1]);
 
     }
 
-    makeMove(piece) {
-        this.currentPiece = piece;
-        this.renderer.domElement.addEventListener('click', this.handleClick);
-        this.renderer.domElement.addEventListener('mousemove', this.handleMouseMove);
-    }
+    // makeMove(piece) {
+    //     this.currentPiece = piece;
+    //     // this.renderer.domElement.addEventListener('click', this.handleClick);
+    //     // this.renderer.domElement.addEventListener('mousemove', this.handleMouseMove);
+    // }
 
-    handleMouseMove(e) {
-        console.log("moving...");
-    }
+    // handleMouseMove(e) {
+    //     console.log("moving...");
+    // }
 
     handleClick(e) {
+        if (window.quartoSelect) return;
         const raycaster = new THREE.Raycaster();
         const mouse = new THREE.Vector2();
         const size = new THREE.Vector2();
@@ -52,14 +56,22 @@ export default class Board {
         const intersects = raycaster.intersectObjects(this.scene.children);
         for (let i = 0; i < intersects.length; i++) {
             if (intersects[i].object.userData.boardId !== undefined) {
-                if (this.board[i] !== undefined) return;
-                this.board[i] = this.currentPiece;
-                this.placePieceOnBoard(this.currentPiece, intersects[i].object.userData.boardId);
+                const idx = intersects[i].object.userData.boardId;
+                if (this.board[idx] !== undefined) return;
+                this.board[idx] = window.selectedPiece;
+                this.placePieceOnBoard(window.selectedPiece, idx);
+                if (!this.isGameWon(idx)) {
+                    window.quartoSelect = true;
+                    const msg = document.getElementById("message");
+                    msg.innerHTML =`Select a piece for your opponent to play.`;
+                    return;
+                }
+                
                 this.renderer.domElement.removeEventListener('click', this.handleClick);
-                this.renderer.domElement.removeEventListener('mousemove', this.handleMouseMove);
-                return;
+                // this.renderer.domElement.removeEventListener('mousemove', this.handleMouseMove);
             }
         }
+
     }
 
     isGameWon (move) {
@@ -74,11 +86,12 @@ export default class Board {
             if (this.board[i] === undefined) return false;
         
         const attributes = ["tall", "dark", "hollow","box"];
+        const opposites = ["small", "light", "solid", "cylinder"];
         for (let a = 0; a < 4; a++) {
             for (let i = rowOffset + 1; i < rowOffset+4; i++) {
                 if (this.board[rowOffset][attributes[a]] !== this.board[i][attributes[a]]) break;
                 if (i === rowOffset+3) {
-                    this.winningAttribute = attributes[a];
+                    this.winningAttribute = this.board[rowOffset][attributes[a]] ? attributes[a] : opposites[a];
                     this.markWin([rowOffset, rowOffset + 1, rowOffset + 2, rowOffset + 3]);
                     return true;
                 }
@@ -92,11 +105,12 @@ export default class Board {
             if (this.board[i] === undefined) return false;
         
         const attributes = ["tall", "dark", "hollow","box"];
+        const opposites = ["small", "light", "solid", "cylinder"];
         for (let a = 0; a < 4; a++) {
             for (let i = columnOffset + 4; i < 16; i += 4) {
                 if (this.board[columnOffset][attributes[a]] !== this.board[i][attributes[a]]) break;
                 if (i === columnOffset+12) {
-                    this.winningAttribute = attributes[a];
+                    this.winningAttribute = this.board[columnOffset][attributes[a]] ? attributes[a] : opposites[a];
                     this.markWin([columnOffset, columnOffset + 4, columnOffset + 8, columnOffset + 12]);
                     return true;
                 }
@@ -116,11 +130,12 @@ export default class Board {
             if (this.board[diagonal[i]] === undefined) return false;
         
         const attributes = ["tall", "dark", "hollow","box"];
+        const opposites = ["small", "light", "solid", "cylinder"];
         for (let a = 0; a < 4; a++) {
             for (let i = 1; i < 4; i++) {
                 if (this.board[diagonal[0]][attributes[a]] !== this.board[diagonal[i]][attributes[a]]) break;
                 if (i === 3) {
-                    this.winningAttribute = attributes[a];
+                    this.winningAttribute = this.board[diagonal[0]][attributes[a]] ? attributes[a] : opposites[a];
                     this.markWin(diagonal);
                     return true;
                 }
@@ -130,7 +145,9 @@ export default class Board {
     }
 
     markWin(winningSquares) {
-        console.log(`Win with ${this.winningAttribute} on ${winningSquares}!`)
+
+        const msg = document.getElementById("message");
+        msg.innerHTML = `Win with ${this.winningAttribute} on ${winningSquares}!`;
     }
 
     initScene() {

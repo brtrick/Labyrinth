@@ -8,6 +8,7 @@ export default class PiecePool {
     constructor() {
         this.pool = new Array(16);
         this.currentSelection = -1;
+        this.scenes = [];
 
         for (let i=0, dark = true; i<2; i++, dark = false) {
             for (let j=0, box = true; j<2; j++, box = false ) {
@@ -48,12 +49,18 @@ export default class PiecePool {
     }
 
     handleClick(e) {
-        const idx = e.target.dataset.idx;
-        if (this.pool[idx].selected) return;
-        console.log(idx);
-        this.pool[idx].selected = true;
-        this.currentSelection = idx;
-        document.getElementById(`button${idx}`).disabled = true;        
+        if (window.quartoSelect) {
+            const idx = e.target.dataset.idx;
+            if (this.pool[idx].selected) return;
+            console.log(idx);
+            this.pool[idx].selected = true;
+            this.currentSelection = idx;
+            document.getElementById(`button${idx}`).disabled = true; 
+            window.quartoSelect = false;
+            window.selectedPiece = this.pool[idx];
+            const msg = document.getElementById("message");
+            msg.innerHTML =  "Click on a board space to play the selected piece. (Hold mouse down and move to rotate board.)"  
+        }   
     }
 
     setScene(piece, li) {
@@ -77,7 +84,7 @@ export default class PiecePool {
         scene.background = new THREE.Color (0xd3d3d3);
         // scene.background = new THREE.Color (0xffffff);
 
-        camera.position.set(10,9,7);
+        camera.position.set(2,1,2);
         
         const animate = function () {
             if (this.pool[index].selected)
