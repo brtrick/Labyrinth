@@ -3,7 +3,7 @@ import "./styles/index.scss";
 import * as THREE from "three";
 import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls.js';
 import {TrackballControls} from 'three/examples/jsm/controls/TrackballControls.js';
-import PiecePool from "./gameLogic/piecePool"
+import PiecePool from "./gameLogic/piecePoolOrig"
 import Board from "./gameLogic/board"
 //
 
