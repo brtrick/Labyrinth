@@ -46,7 +46,9 @@ export default class Piece {
         const material = this.dark ?
             new THREE.MeshStandardMaterial( { map: textureD, normalMap: normalD, roughnessMap: roughnessD} ) :
             new THREE.MeshStandardMaterial( { map: texture, normalMap: normal, roughnessMap: roughness} );
-        return new THREE.Mesh( geometry, material );
+        const model = new THREE.Mesh( geometry, material );
+        model.castShadow = true;
+        return model;
     }
 
     // initHollowTop() {

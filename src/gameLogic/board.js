@@ -13,7 +13,8 @@ export default class Board {
         this.scene = new THREE.Scene();
         this.scene.rotateX(-Math.PI/2);
         this.camera = new THREE.PerspectiveCamera( 75, 100 / 100, 2, 200 );
-        this.renderer = new THREE.WebGLRenderer({antialias: true});
+        const canvas = document.getElementById("board");
+        this.renderer = new THREE.WebGLRenderer({canvas: canvas, antialias: true});
         this.controls = new OrbitControls(this.camera, this.renderer.domElement);
 
         this.currentPiece = null;
@@ -151,19 +152,21 @@ export default class Board {
     }
 
     initScene() {
-        this.renderer.setSize( 400, 250 );
-        const boardDiv = document.getElementById("board");
+        // this.renderer.setSize( 400, 250 );
+        const boardDiv = document.getElementById("board-container");
         boardDiv.append (this.renderer.domElement);
 
         const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
         const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
+        dirLight.castShadow = true;
         dirLight.position.set(10,20,5);
         this.scene.add(ambientLight);
         this.scene.add(dirLight);
         // this.scene.background = new THREE.Color (0xd3d3d3);
         this.scene.background = new THREE.Color (0xffffff);
 
-        this.camera.position.set(1.7018, 5.07284, -2.976548);
+        this.camera.position.set(1.82195, 3.06664, -3.48534);
+        // this.camera.position.set(1.7018, 5.07284, -2.976548);
         
         this.initBoard();
 
@@ -177,10 +180,12 @@ export default class Board {
     }
 
     initBoard() {
-        const boxGeo = new BoxGeometry(6, 6, 0.1);
+        const boxGeo = new BoxGeometry(6, 6, .5);
+        // const boxGeo = new BoxGeometry(6, 6, 0.1);
         const board = new THREE.Mesh(boxGeo, new THREE.MeshStandardMaterial({color: 0x800000}));
         board.rotateZ(Math.PI/4);
-        board.position.set(0, 0, -0.1001);
+        board.position.set(0, 0, -.3501);
+        board.receiveShadow = true;
         this.scene.add(board);
 
         let uniforms = {

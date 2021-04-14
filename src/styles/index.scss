@@ -5,6 +5,10 @@ body {
     font-family: Arial, Helvetica, sans-serif;
 }
 
+#canvas {
+    position: absolute;
+}
+
 title {
     display: flex;
     width: 100%;
@@ -22,17 +26,22 @@ title {
 h1 {
     font-weight: 700;
 }
-.piece-pool-container {
-    width: 415px;
+#piece-pool-container {
+    
 }
 
 #piece-pool {
+    position: relative;
+    height: 120px;
+    width: 800px;
     display: flex;
     justify-content: left;
     flex-wrap: wrap;
 }
 
 .piece-pool-item {
-    width: 100px;
-    border: solid 1px black;
+    position: relative;
+    width: 50px;
+    height: 120px;
+    z-index: 1;
 }

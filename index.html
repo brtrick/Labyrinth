@@ -10,17 +10,18 @@
 
 <body>
     <title>Quarto!</title>
-    <div class="game">
-        <div class="piece-pool-container">
+    <div id="game">
+        <div><p id="message">Select a piece for your opponent to play.</p></div>
+        <div id="board-container">
+            <canvas id="board" width="800px" height="500px"></canvas>
+        </div>
+        <div id="piece-pool-container">
             <h1>Pieces Remaining</h1>
             <ul id="piece-pool">
+                <canvas id="canvas"></canvas>
 
             </ul>
         </div>
-    </div>
-    <div><p id="message">Select a piece for your opponent to play.</p></div>
-    <div id="board">
-
     </div>
     <script src="./dist/main.js"></script>
 
