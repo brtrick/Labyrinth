@@ -1,4 +1,5 @@
 import Piece from "./piecexy"
+import PieceToPlay from './pieceToPlay'
 import * as THREE from "three";
 import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls.js';
 
@@ -7,6 +8,7 @@ export default class PiecePool {
     constructor() {
         this.pool = new Array(16);
         this.currentSelection = -1;
+        this.pieceToPlay = new PieceToPlay();
         this.scenes = [];
 
         this.camera = new THREE.PerspectiveCamera( 50, 50/120, 2, 200 );
@@ -21,7 +23,7 @@ export default class PiecePool {
         this.renderer = new THREE.WebGLRenderer({canvas: canvas, antialias: true});
         this.renderer.setScissorTest( true );
         this.controls = new OrbitControls(this.camera, this.renderer.domElement);
-
+       
         //Populate the pool
         for (let i=0, dark = true; i<2; i++, dark = false) {
             for (let j=0, box = true; j<2; j++, box = false ) {
@@ -81,7 +83,10 @@ export default class PiecePool {
             const li = scene.userData.li;
             const index = li.dataset.idx;
             if (this.pool[index].selected) {
-                if (this.currentSelection === index) scene.remove(this.pool[index].model);
+                if (this.currentSelection === index) {
+                    scene.remove(this.pool[index].model);
+                    this.pieceToPlay.addPiece(this.pool[index].model);
+                }
             }
 
             const rect = li.getBoundingClientRect();

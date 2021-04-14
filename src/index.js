@@ -11,3 +11,4 @@ const b = new Board();
 
 const piecePool = document.getElementById("piece-pool");
 piecePool.addEventListener("click", p.handleClick);
+

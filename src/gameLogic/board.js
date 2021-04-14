@@ -60,6 +60,7 @@ export default class Board {
                 const idx = intersects[i].object.userData.boardId;
                 if (this.board[idx] !== undefined) return;
                 this.board[idx] = window.selectedPiece;
+
                 this.placePieceOnBoard(window.selectedPiece, idx);
                 if (!this.isGameWon(idx)) {
                     window.quartoSelect = true;
@@ -238,7 +239,7 @@ export default class Board {
     placePieceOnBoard(piece, index) {
         piece.model.position.set(-1.5 + (index%4), 1.5 - Math.floor(index/4),
             (piece.tall ? .75 : .375));
-        this.scene.add(piece.model);
+        this.scene.add(piece.model.clone());
     }
 
 }
