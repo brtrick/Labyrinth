@@ -44,8 +44,8 @@ export default class PieceToPlay extends PieceContainer {
     }
     
     addPiece(piece) {
-        this.piece = piece;
-        this.scene.add(piece);
+        this.piece = piece.model.clone();
+        this.scene.add(this.piece);
     }
 
     removePiece() {

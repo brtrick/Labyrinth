@@ -48,6 +48,7 @@ export default class Piece {
             new THREE.MeshStandardMaterial( { map: texture, normalMap: normal, roughnessMap: roughness} );
         const model = new THREE.Mesh( geometry, material );
         model.castShadow = true;
+        model.userData = {piece: true}
         return model;
     }
 

@@ -9,12 +9,16 @@ body {
     position: absolute;
 }
 
-title {
+h1 {
     display: flex;
     width: 100%;
-    margin-right: auto;
-    margin-left: 50%;
-    transform: translateX(-50%);
+    span {
+        margin-right: auto;
+        margin-left: 50%;
+        transform: translateX(-50%);
+    }
+    font-weight: 700;
+    font-size: 40px;
 }
 
 .select-button {
@@ -23,17 +27,26 @@ title {
     transform: translateX(-50%);
 }
 
-h1 {
+h2 {
     font-weight: 700;
+    margin-right: auto;
+    margin-left: 50%;
+    transform: translateX(-50%);
 }
+
 #piece-pool-container {
-    
+    position: relative;
+    width: 120px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 #piece-pool {
+    box-sizing: border-box;
     position: relative;
-    height: 120px;
-    width: 800px;
+    height: 600px;
+    width: 100px;
     display: flex;
     justify-content: left;
     flex-wrap: wrap;
@@ -42,6 +55,24 @@ h1 {
 .piece-pool-item {
     position: relative;
     width: 50px;
-    height: 120px;
+    height: 75px;
     z-index: 1;
+    border: 1px solid black;
+    &:nth-child(2n) {
+        border-left: 2px solid black;
+    }
+    &:nth-child(odd) {
+        border-right: 2px solid black;
+    }
+    &:nth-child(2), &:nth-child(3) {
+        border-top: 2px solid black;
+    }
+    &:nth-child(16), &:last-child {
+        border-bottom: 2px solid black;
+    }
+}
+
+#piece-containers {
+    display: flex;
+    justify-content: space-between;
 }

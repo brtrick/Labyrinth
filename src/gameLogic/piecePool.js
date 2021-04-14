@@ -35,10 +35,10 @@ export default class PiecePool {
              }
         }
 
-        this.handleClick = this.handleClick.bind(this);
         this.animate = this.animate.bind(this);
         
         this.animationId = null;
+        this.initDisplay();
     }
 
     initDisplay() {
@@ -62,43 +62,21 @@ export default class PiecePool {
         this.animate();
     }
 
-    handleClick(e) {
-        if (window.quartoSelect) {
-            const idx = e.target.dataset.idx;
-            if (this.pool[idx].selected) return;
-            console.log(idx);
-            this.pool[idx].selected = true;
-            this.currentSelection = idx;
-            // document.getElementById(`button${idx}`).disabled = true; 
-            window.quartoSelect = false;
-            window.selectedPiece = this.pool[idx];
-            const msg = document.getElementById("message");
-            msg.innerHTML =  "Click on a board space to play the selected piece. (Hold mouse down and move to rotate board.)"  
-            // test to modify
-        }   
-    }
 
     animate () {
         this.scenes.forEach((scene) => {
             const li = scene.userData.li;
             const index = li.dataset.idx;
-            if (this.pool[index].selected) {
-                if (this.currentSelection === index) {
-                    scene.remove(this.pool[index].model);
-                    this.pieceToPlay.addPiece(this.pool[index].model);
-                }
-            }
-
             const rect = li.getBoundingClientRect();
             const top = rect.top;
             const left = rect.left;
             const width = rect.right - rect.left;
             const height = rect.bottom - rect.top;
 
-            // this.renderer.setScissor(left, this.renderer.domElement.height - height  * (1+Math.floor(index/4)), width, height);
-            // this.renderer.setViewport(left, this.renderer.domElement.height - height * (1+Math.floor(index/4)), width, height);
-            this.renderer.setScissor (left, this.renderer.domElement.height - height, width, height);
-            this.renderer.setViewport(left, this.renderer.domElement.height - height, width, height);
+            this.renderer.setScissor(left-10, this.renderer.domElement.height - height  * (1+Math.floor(index/2)), width, height);
+            this.renderer.setViewport(left-10, this.renderer.domElement.height - height * (1+Math.floor(index/2)), width, height);
+            // this.renderer.setScissor (left, this.renderer.domElement.height - height, width, height);
+            // this.renderer.setViewport(left, this.renderer.domElement.height - height, width, height);
             this.camera.aspect = width/height;
             this.camera.updateProjectionMatrix();
             this.controls.update();

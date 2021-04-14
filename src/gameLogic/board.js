@@ -16,65 +16,13 @@ export default class Board {
         const canvas = document.getElementById("board");
         this.renderer = new THREE.WebGLRenderer({canvas: canvas, antialias: true});
         this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+        this.controls.enableZoom = false;
 
         this.currentPiece = null;
-        this.handleClick = this.handleClick.bind(this);
-        // this.handleMouse = this.handleMouseMove.bind(this);
         
         this.initScene();
-        this.renderer.domElement.addEventListener('click', this.handleClick);
-        // this.renderer.domElement.addEventListener('mousemove', this.handleMouseMove);
-
-
-        // test
-        //  const p = new PiecePool();
-        //  this.makeMove(p.pool[0]);
-        //  this.makeMove(p.pool[1]);
-
     }
 
-    // makeMove(piece) {
-    //     this.currentPiece = piece;
-    //     // this.renderer.domElement.addEventListener('click', this.handleClick);
-    //     // this.renderer.domElement.addEventListener('mousemove', this.handleMouseMove);
-    // }
-
-    // handleMouseMove(e) {
-    //     console.log("moving...");
-    // }
-
-    handleClick(e) {
-        if (window.quartoSelect) return;
-        const raycaster = new THREE.Raycaster();
-        const mouse = new THREE.Vector2();
-        const size = new THREE.Vector2();
-
-        this.renderer.getSize(size);
-        mouse.x= (e.offsetX / size.x) * 2 - 1;
-        mouse.y= -(e.offsetY / size.y) * 2 +1;
-
-        raycaster.setFromCamera( mouse, this.camera);
-        const intersects = raycaster.intersectObjects(this.scene.children);
-        for (let i = 0; i < intersects.length; i++) {
-            if (intersects[i].object.userData.boardId !== undefined) {
-                const idx = intersects[i].object.userData.boardId;
-                if (this.board[idx] !== undefined) return;
-                this.board[idx] = window.selectedPiece;
-
-                this.placePieceOnBoard(window.selectedPiece, idx);
-                if (!this.isGameWon(idx)) {
-                    window.quartoSelect = true;
-                    const msg = document.getElementById("message");
-                    msg.innerHTML =`Select a piece for your opponent to play.`;
-                    return;
-                }
-                
-                this.renderer.domElement.removeEventListener('click', this.handleClick);
-                // this.renderer.domElement.removeEventListener('mousemove', this.handleMouseMove);
-            }
-        }
-
-    }
 
     isGameWon (move) {
         if (this.rowWinner(move)) return true;
@@ -227,13 +175,6 @@ export default class Board {
                 this.scene.add(square);
             }
         }
-        
-        //Add pieces (testing)
-        // const p = new PiecePool();
-        // for (let i =0; i <16; i++)
-        //     this.placePieceOnBoard(p.pool[i], i);
-        
-
     }
 
     placePieceOnBoard(piece, index) {
@@ -241,7 +182,6 @@ export default class Board {
             (piece.tall ? .75 : .375));
         this.scene.add(piece.model.clone());
     }
-
 }
 
 const circleVertexShader = function () {

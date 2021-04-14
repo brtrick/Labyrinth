@@ -9,21 +9,25 @@
 </head>
 
 <body>
-    <title>Quarto!</title>
-    <div id="game">
-        <div><p id="message">Select a piece for your opponent to play.</p></div>
-        <div id="board-container">
-            <canvas id="board" width="1000px" height="400px"></canvas>
-        </div>
+    <h1><span>Quarto!</span></h1>
+    <div id="left-sidebar">
         <div id="piece-pool-container">
-            <h1>Pieces Remaining</h1>
+            <h2>Pieces Remaining</h2>
             <ul id="piece-pool">
                 <canvas id="canvas"></canvas>
             </ul>
         </div>
-        <div id="piece-to-play-container">
-            <h1>Piece to Play</h1>
-            <canvas id="piece-to-play" width="50px" height="120px"></canvas>
+    </div>
+    <div id="game">
+        <div id="board-container">
+            <canvas id="board" width="1000px" height="400px"></canvas>
+        </div>
+        <div><p id="message">Select a piece for your opponent to play.</p></div>
+        <div id="piece-containers">
+            <div id="piece-to-play-container">
+                <h2>Piece to Play</h2>
+                <canvas id="piece-to-play" width="50px" height="120px"></canvas>
+            </div>
         </div>
     </div>
     <script src="./dist/main.js"></script>
