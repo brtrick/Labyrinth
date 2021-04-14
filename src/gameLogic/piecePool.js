@@ -10,7 +10,7 @@ export default class PiecePool {
         this.scenes = [];
 
         this.camera = new THREE.PerspectiveCamera( 50, 50/120, 2, 200 );
-        this.camera.position.set(2,1,2);
+        this.camera.position.set(2,1,3);
         
         const canvas = document.getElementById("canvas");
         const piecePoolHTML = document.getElementById("piece-pool");

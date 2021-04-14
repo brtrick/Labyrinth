@@ -185,6 +185,7 @@ export default class Board {
         const board = new THREE.Mesh(boxGeo, new THREE.MeshStandardMaterial({color: 0x800000}));
         board.rotateZ(Math.PI/4);
         board.position.set(0, 0, -.3501);
+        // board.position.set(0, 0, -.1001);
         board.receiveShadow = true;
         this.scene.add(board);
 
