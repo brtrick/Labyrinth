@@ -153,6 +153,7 @@ export default class Board {
                 })); 
         boardCircle.rotateZ(Math.PI/4);
         boardCircle.position.set(0, 0, 0);
+        boardCircle.receiveShadow = true;
         this.scene.add(boardCircle);
 
         const unitSquare = new PlaneGeometry(1,1,1,1);
@@ -178,9 +179,10 @@ export default class Board {
     }
 
     placePieceOnBoard(piece, index) {
-        piece.model.position.set(-1.5 + (index%4), 1.5 - Math.floor(index/4),
+        const model = piece.model.clone();
+        model.position.set(-1.5 + (index%4), 1.5 - Math.floor(index/4),
             (piece.tall ? .75 : .375));
-        this.scene.add(piece.model.clone());
+        this.scene.add(model);
     }
 }
 
