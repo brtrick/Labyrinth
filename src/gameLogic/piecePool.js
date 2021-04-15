@@ -23,7 +23,10 @@ export default class PiecePool {
         this.renderer = new THREE.WebGLRenderer({canvas: canvas, antialias: true});
         this.renderer.setScissorTest( true );
         this.controls = new OrbitControls(this.camera, this.renderer.domElement);
-       
+        this.controls.enableZoom = false;
+        this.controls.enablePan = false;
+        this.controls.enableRotate = false;
+
         //Populate the pool
         for (let i=0, dark = true; i<2; i++, dark = false) {
             for (let j=0, box = true; j<2; j++, box = false ) {

@@ -18,8 +18,9 @@ export default class Quarto {
         this.handlePiecePoolClick = this.handlePiecePoolClick.bind(this);
         this.handleBoardClick = this.handleBoardClick.bind(this);
         
-        const msg = document.getElementById("message");
-        msg.innerHTML =`${this['player' + this.opposingPlayer]}, select a piece for ${this['player' + this.currentPlayer]} to play.`;
+        // const msg = document.getElementById("message");
+        // msg.innerHTML =`${this['player' + this.opposingPlayer]}, select a piece for ${this['player' + this.currentPlayer]} to play.`;
+        this.printMessage(`${this['player' + this.opposingPlayer]}, select a piece for ${this['player' + this.currentPlayer]} to play.`);
         this.activatePiecePool();
     }
 
@@ -36,8 +37,9 @@ export default class Quarto {
         this.piecePool.currentSelection = idx;
         this.selectedPiece = this.piecePool.pool[idx];
         this.piecePool.pieceToPlay.addPiece(this.selectedPiece);
-        const msg = document.getElementById("message");
-        msg.innerHTML =  `${this['player' + this.currentPlayer]}, click on a board space to play the selected piece. (Hold mouse down and move to rotate board.)`;  
+        // const msg = document.getElementById("message");
+        // msg.innerHTML =  `${this['player' + this.currentPlayer]}, click on a board space to play the selected piece. (Hold mouse down and move to rotate board.)`;  
+        this.printMessage(`${this['player' + this.currentPlayer]}, click on a board space to play the selected piece. (Hold mouse down and move to rotate board.)`);  
         this.piecePoolHTML.removeEventListener("click", this.handlePiecePoolClick);
         this.activateBoard();   
     }
@@ -73,8 +75,9 @@ export default class Quarto {
                 this.piecePool.pieceToPlay.removePiece();
                 if (!this.board.isGameWon(idx)) {
                     [this.currentPlayer, this.opposingPlayer] = [this.opposingPlayer, this.currentPlayer]; 
-                    const msg = document.getElementById("message");
-                    msg.innerHTML =`${this['player' + this.opposingPlayer]}, select a piece for ${this['player' + this.currentPlayer]} to play.`;
+                    // const msg = document.getElementById("message");
+                    // msg.innerHTML =`${this['player' + this.opposingPlayer]}, select a piece for ${this['player' + this.currentPlayer]} to play.`;
+                    this.printMessage(`${this['player' + this.opposingPlayer]}, select a piece for ${this['player' + this.currentPlayer]} to play.`);
                     this.boardHTML.removeEventListener("click", this.handleBoardClick);
                     this.activatePiecePool();
                     return;
@@ -83,5 +86,10 @@ export default class Quarto {
                 this.boardHTML.removeEventListener('click', this.handleBoardClick);
             }
         }
+    }
+
+    printMessage(msg) {
+        const msgHTML = document.getElementById("message");
+        msgHTML.innerHTML = msg;      
     }
 }
