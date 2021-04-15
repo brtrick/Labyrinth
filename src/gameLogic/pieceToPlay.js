@@ -5,10 +5,11 @@ import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls.js';
 class PieceContainer {
 
     constructor() {
-        const canvas = document.getElementById("piece-to-play");
+        // const canvas = document.getElementById("piece-to-play");
         this.camera = new THREE.PerspectiveCamera( 50, 50/120, 2, 200 );
         this.camera.position.set(2,1,3);
-        this.renderer = new THREE.WebGLRenderer({canvas: canvas, antialias: true});
+        this.renderer = new THREE.WebGLRenderer({ antialias: true });
+        this.renderer.setSize(100, 150);
         this.controls = new OrbitControls(this.camera, this.renderer.domElement);
 
  

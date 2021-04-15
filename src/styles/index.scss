@@ -42,9 +42,14 @@ h2 {
     align-items: center;
 }
 
+#left-sidebar {
+    position: fixed;
+    left: 0;
+    top: 50px;
+}
+
 #piece-pool {
     box-sizing: border-box;
-    position: relative;
     height: 600px;
     width: 100px;
     display: flex;
@@ -58,6 +63,7 @@ h2 {
     height: 75px;
     z-index: 1;
     border: 1px solid black;
+    // The canvas is the first child of the ul
     &:nth-child(2n) {
         border-left: 2px solid black;
     }
@@ -72,11 +78,29 @@ h2 {
     }
     &.selected {
         background-color: gray;
-        opacity: 60%;
+        opacity: 70%;
     }
 }
 
-#piece-containers {
+#pieces-to-play {
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 150px;
+}
+
+#pieces-to-play-container {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    .piece-to-play-container {
+        margin: 10px;
+        canvas {
+            margin-top: 5px;
+            border: 2px solid black;
+        }
+    }
+}
+
+#game {
+    margin-left: 150px;
 }

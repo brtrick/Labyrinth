@@ -36,7 +36,7 @@ export default class Quarto {
         this.piecePool.pool[idx].selected = true;
         this.piecePool.currentSelection = idx;
         this.selectedPiece = this.piecePool.pool[idx];
-        this.piecePool.pieceToPlay.addPiece(this.selectedPiece);
+        this.piecePool[`player${this.currentPlayer}PieceToPlay`].addPiece(this.selectedPiece);
         // const msg = document.getElementById("message");
         // msg.innerHTML =  `${this['player' + this.currentPlayer]}, click on a board space to play the selected piece. (Hold mouse down and move to rotate board.)`;  
         this.printMessage(`${this['player' + this.currentPlayer]}, click on a board space to play the selected piece. (Hold mouse down and move to rotate board.)`);  
@@ -72,7 +72,7 @@ export default class Quarto {
 
                 this.board.placePieceOnBoard(this.selectedPiece, idx);
                 this.selectedPiece = null;
-                this.piecePool.pieceToPlay.removePiece();
+                this.piecePool[`player${this.currentPlayer}PieceToPlay`].removePiece();
                 if (!this.board.isGameWon(idx)) {
                     [this.currentPlayer, this.opposingPlayer] = [this.opposingPlayer, this.currentPlayer]; 
                     // const msg = document.getElementById("message");
