@@ -30,48 +30,34 @@ export default class Piece {
     initModel() {
         // new THREE.BoxGeometry(3, 3, (this.tall ? 9 : 4.5)) :
         // new THREE.CylinderGeometry(1.5, 1.5, (this.tall ? 9 : 4.5), 64);
-        let geometry, shape = new THREE.Shape();
-        if (this.box) {
-            // geometry = new THREE.BoxGeometry(.5, .5, (this.tall ? 1.5 : 0.75));
-            shape.moveTo(-.20, .20);
-            shape.lineTo(-.20, -.20);
-            shape.lineTo(.20, -.20);
-            shape.lineTo(.20, .20);
-        }
-        else { 
-            shape.absarc(0,0,.25, 0, 2*Math.PI, false);
-
-            // geometry = new THREE.CylinderGeometry(.25, .25, (this.tall ? 1.5 : 0.75), 64);
-            // geometry.rotateX(-Math.PI/2);
+        let geometry;
+        if (this.box)
+            geometry = new THREE.BoxGeometry(.5, .5, (this.tall ? 1.5 : 0.75));
+        else {    
+            geometry = new THREE.CylinderGeometry(.25, .25, (this.tall ? 1.5 : 0.75), 64);
+            geometry.rotateX(-Math.PI/2);
         }
         if (this.hollow) {
-            const hole = new THREE.Shape();
-            hole.absarc(0,0,.2, 0, 2*Math.PI, true);
-            // hole.absarc(0,0,.125, 0, 2*Math.PI, true);
-            shape.holes.push(hole);
-            // const sphereGeo = new THREE.SphereGeometry (.4, 200, 200, 0, Math.PI*2, Math.PI/2, Math.PI);
-            // sphereGeo.setAttribute("position", [0, (this.tall ? 1.5 : .75), 0]);
+            const sphereGeo = new THREE.SphereGeometry (.4, 200, 200, 0, Math.PI*2, Math.PI/2, Math.PI);
+            sphereGeo.setAttribute("position", [0, (this.tall ? 1.5 : .75), 0]);
             // geometry = BufferGeometryUtils.mergeBufferGeometries([geometry, sphereGeo]);
         }
-        const height = this.tall ? 1.5 : .75;
-        
-        geometry = new THREE.ExtrudeGeometry(shape, {depth: height, curveSegments: 24, steps: 8, bevelThickness: .1, bevelSize: .07, bevelSegments: 8})
         
         const material = this.dark ?
             new THREE.MeshStandardMaterial( { map: textureD, normalMap: normalD, roughnessMap: roughnessD} ) :
             new THREE.MeshStandardMaterial( { map: texture, normalMap: normal, roughnessMap: roughness} );
-        const model = new THREE.Mesh( geometry, material );
+        let model = new THREE.Mesh( geometry, material );
         model.castShadow = true;
         model.userData = {piece: true};
-        // if (this.hollow) {
-        //     const sphereGeo = new THREE.SphereGeometry (.4, 200, 200, 0, Math.PI*2, Math.PI/2, Math.PI);
-        //     sphereGeo.setAttribute("position", [0, (this.tall ? 1.5 : .75), 0]);
-        //     const sphereModel = new THREE.Mesh( sphereGeo, material);
-        //     sphereModel.castShadow = false;
-        //     model = new THREE.Group();
-        //     model.add (new THREE.Mesh( geometry, material ));
-        //     model.add (sphereModel);
-        // }
+        if (this.hollow) {
+            const sphereGeo = new THREE.SphereGeometry (.4, 200, 200, 0, Math.PI*2, Math.PI/2, Math.PI);
+            sphereGeo.setAttribute("position", [0, (this.tall ? 1.5 : .75), 0]);
+            const sphereModel = new THREE.Mesh( sphereGeo, material);
+            sphereModel.castShadow = false;
+            model = new THREE.Group();
+            model.add (new THREE.Mesh( geometry, material ));
+            model.add (sphereModel);
+        }
         return model;
     }
 

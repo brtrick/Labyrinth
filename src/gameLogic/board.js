@@ -180,8 +180,8 @@ export default class Board {
 
     placePieceOnBoard(piece, index) {
         const model = piece.model.clone();
-        model.position.set(-1.5 + (index%4), 1.5 - Math.floor(index/4),
-            (piece.tall ? .75 : .375));
+        model.position.set(-1.5 + (index%4), 1.5 - Math.floor(index/4), 0);
+            // (piece.tall ? .75 : .375));
         this.scene.add(model);
     }
 }
