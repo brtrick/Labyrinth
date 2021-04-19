@@ -13,12 +13,13 @@ h1 {
     display: flex;
     width: 100%;
     span {
+        font-family: 'Limelight', cursive;
         margin-right: auto;
         margin-left: 50%;
         transform: translateX(-50%);
     }
     font-weight: 700;
-    font-size: 40px;
+    font-size: 100px;
 }
 
 .select-button {
@@ -45,13 +46,18 @@ h2 {
 #left-sidebar {
     position: fixed;
     left: 0;
-    top: 50px;
+    top: 0px;
 }
 
 .message-container {
-    margin-right: 150px;
+    //margin-right: 0px;
     margin-left: 50%;
     transform: translateX(-50%);
+    p {
+        //width: 100%;
+        margin-left: 50%;
+        transform: translateX(-50%);
+    }
 }
 #piece-pool {
     box-sizing: border-box;
@@ -109,4 +115,14 @@ h2 {
 
 #game {
     margin-left: 150px;
+}
+
+#instructions {
+    li {
+        
+        li {
+            list-style: disc;
+            margin-left: 15px;
+        }
+    }
 }
