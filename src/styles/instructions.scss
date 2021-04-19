@@ -1,0 +1,67 @@
+
+.main-content {
+    display: flex;
+    justify-content: left;
+}
+
+#instructions-container {
+    width: 400px;
+    height: 600px;
+    color: black;
+    background: url("../../dist/assets/scroll.jpg");
+    background-size: 400px 600px;
+    background-repeat: no-repeat;
+    h2 {
+        padding-bottom: 5px;
+        opacity: 70%;
+        font-family: 'Ballet', cursive;
+        margin-top: 100px;
+        font-size: 48px;
+        margin-left: 50%;
+        transform: translateX(-50%);
+    }
+    h3 {
+        padding-bottom: 5px;
+        opacity: 70%;
+        margin-top: 10px;
+        margin-left: 60px;
+        font-size: 20px;
+        display: flex;
+        justify-content: left;
+        div {
+            margin-right: 10px;
+        }
+    }
+    li li {
+        list-style: none;
+        margin-left: 90px;
+        padding-bottom: 5px;
+        max-width: 250px;
+        li {
+            list-style: disc;
+            margin-left: 25px;
+            padding-bottom: 5px;
+        }
+    }
+}
+
+.hidden {
+    display: none;
+}
+
+.left-arrow {
+    height: 0;
+    width: 0;
+    border-left: 5px solid black;
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+}
+
+.down-arrow {
+    font-size: 10px;
+    height: 0;
+    width: 0;
+    border-top: 5px solid black;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+}

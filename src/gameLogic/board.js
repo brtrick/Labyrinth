@@ -3,7 +3,7 @@ import PiecePool from "./piecePoolIndiv";
 import * as THREE from "three";
 import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls.js';
 import { BoxGeometry, PlaneGeometry, Raycaster, Vector4 } from "three";
-
+import {printMessage} from './quarto'
 
 export default class Board {
     constructor() {
@@ -19,10 +19,18 @@ export default class Board {
         this.controls.enableZoom = false;
 
         this.currentPiece = null;
-        
+        this.numMoves = 0;
         this.initScene();
     }
 
+    isGameTie() {
+        // Assumes game has already checked for win
+        if (this.numMoves === 16) {
+            printMessage("Tie Game!");
+            return true;
+        }
+        return false;
+    }
 
     isGameWon (move) {
         if (this.rowWinner(move)) return true;
@@ -95,9 +103,7 @@ export default class Board {
     }
 
     markWin(winningSquares) {
-
-        const msg = document.getElementById("message");
-        msg.innerHTML = `Win with ${this.winningAttribute} on ${winningSquares}!`;
+        printMessage(`Win with ${this.winningAttribute} on ${winningSquares}!`);
     }
 
     initScene() {
@@ -114,7 +120,10 @@ export default class Board {
         // this.scene.background = new THREE.Color (0xd3d3d3);
         this.scene.background = new THREE.Color (0xffffff);
 
-        this.camera.position.set(1.82195, 3.06664, -3.48534);
+        this.camera.position.set(2, 5.345, -6);
+        // this.camera.position.set(-0.125, 5.345, -6);
+        // this.camera.position.set(1.275, 5.345, -5.725);
+        // this.camera.position.set(1.82195, 3.06664, -3.48534);
         // this.camera.position.set(1.7018, 5.07284, -2.976548);
         
         this.initBoard();
@@ -183,6 +192,7 @@ export default class Board {
         model.position.set(-1.5 + (index%4), 1.5 - Math.floor(index/4), 0);
             // (piece.tall ? .75 : .375));
         this.scene.add(model);
+        this.numMoves++;
     }
 }
 
