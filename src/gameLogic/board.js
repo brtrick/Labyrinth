@@ -12,7 +12,7 @@ export default class Board {
 
         this.scene = new THREE.Scene();
         this.scene.rotateX(-Math.PI/2);
-        this.camera = new THREE.PerspectiveCamera( 75, 100 / 100, 2, 200 );
+        this.camera = new THREE.PerspectiveCamera( 50, 100 / 100, .5, 100 );
         const canvas = document.getElementById("board");
         this.renderer = new THREE.WebGLRenderer({canvas: canvas, antialias: true});
         this.controls = new OrbitControls(this.camera, this.renderer.domElement);
@@ -120,7 +120,7 @@ export default class Board {
         // this.scene.background = new THREE.Color (0xd3d3d3);
         this.scene.background = new THREE.Color (0xffffff);
 
-        this.camera.position.set(2, 5.345, -6);
+        this.camera.position.set(0.5, 4.345, -6);
         // this.camera.position.set(-0.125, 5.345, -6);
         // this.camera.position.set(1.275, 5.345, -5.725);
         // this.camera.position.set(1.82195, 3.06664, -3.48534);

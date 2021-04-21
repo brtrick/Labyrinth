@@ -9,6 +9,8 @@ const normal = textureLoader.load("dist/assets/ZebranoVeneer_512_normal.png")
 const textureD = textureLoader.load("dist/assets/Wenge_512_albedo.png");
 const roughnessD = textureLoader.load("dist/assets/Wenge_512_roughness.png");
 const normalD = textureLoader.load("dist/assets/Wenge_512_normal.png")
+
+// texture.minFilter = THREE.LinearFilter;
 const array = [texture, roughness, normal, textureD, roughnessD, normalD];
 for (let i=0; i < array.length; i++) {
     array[i].wrapS = [array[i]].wrapT = THREE.RepeatWrapping;
@@ -51,6 +53,7 @@ export default class Piece {
         const height = this.tall ? 1.5 : .75;
         
         const geometry = new THREE.ExtrudeGeometry(shape, {depth: height, curveSegments: 24, steps: 8, bevelThickness: .1, bevelSize: .07, bevelSegments: 8})
+        // const geometry = new THREE.ExtrudeGeometry(shape, {depth: height, curveSegments: 12, steps: 4, bevelThickness: .1, bevelSize: .07, bevelSegments: 8})
         
         const material = this.dark ?
             new THREE.MeshStandardMaterial( { map: textureD, normalMap: normalD, roughnessMap: roughnessD} ) :

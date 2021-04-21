@@ -32,10 +32,10 @@ export default class PiecePool {
         canvas.width = rect.right - rect.left;
         canvas.height = rect.bottom - rect.top;
 
-        this.renderer = new THREE.WebGLRenderer({canvas: canvas, antialias: true});
+        this.renderer = new THREE.WebGLRenderer({canvas: canvas, alpha: true, antialias: true});
         this.renderer.setScissorTest( true );
         this.controls = new OrbitControls(this.camera, this.renderer.domElement);
-        // this.controls.enableZoom = false;
+        this.controls.enableZoom = false;
         // this.controls.enablePan = false;
         // this.controls.enableRotate = false;
 
@@ -80,16 +80,19 @@ export default class PiecePool {
 
     animate () {
         this.scenes.forEach((scene) => {
+            const ul = document.getElementById("piece-pool");
+            const ulRect = ul.getBoundingClientRect();
             const li = scene.userData.li;
             const index = li.dataset.idx;
             const rect = li.getBoundingClientRect();
-            const top = rect.top;
-            const left = rect.left;
-            const width = rect.right - rect.left;
-            const height = rect.bottom - rect.top;
+            const top = rect.top - ulRect.top + li.clientTop;
+            const left = rect.left - ulRect.left + li.clientLeft;
+            const width = li.clientWidth;
+            const height = li.clientHeight;
+            const margin = getComputedStyle(li);
 
-            this.renderer.setScissor(left-10, this.renderer.domElement.height - height  * (1+Math.floor(index/2)), width, height);
-            this.renderer.setViewport(left-10, this.renderer.domElement.height - height * (1+Math.floor(index/2)), width, height);
+            this.renderer.setScissor(left, this.renderer.domElement.height - ((li.offsetHeight+parseInt(margin.marginTop)+parseInt(margin.marginBottom))  * (1+Math.floor(index/2))) + parseInt(margin.marginBottom) + li.clientTop, width, height);
+            this.renderer.setViewport(left, this.renderer.domElement.height - ((li.offsetHeight+parseInt(margin.marginTop)+parseInt(margin.marginBottom))  * (1+Math.floor(index/2))) + parseInt(margin.marginBottom) + li.clientTop, width, height);
             // this.renderer.setScissor (left, this.renderer.domElement.height - height, width, height);
             // this.renderer.setViewport(left, this.renderer.domElement.height - height, width, height);
             this.camera.aspect = width/height;

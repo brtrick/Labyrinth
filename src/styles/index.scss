@@ -2,16 +2,16 @@ $dark: #483C32;
 $light: #fbf3d4;
 
 body {
-    font-family: Arial, Helvetica, sans-serif;
-}
-
-#canvas {
-    position: absolute;
+    font-family: 'Roboto', Arial, Helvetica, sans-serif;
+    background-color: rgba(42, 42, 46, 1);
+    color:white;
 }
 
 h1 {
     display: flex;
     width: 100%;
+    height: 100px;
+    color: white;
     span {
         font-family: 'Limelight', cursive;
         margin-right: auto;
@@ -22,6 +22,27 @@ h1 {
     font-size: 100px;
 }
 
+.main-content {
+    display: flex;
+
+}
+
+.right-container {
+    //margin-top: 100px;
+    margin-left: 50px;
+}
+
+#canvas {
+    position: absolute;
+    background-color:rgba(42, 42, 46, 1);
+}
+
+#board {
+    border-radius: 30px;
+    border: 5px solid black;
+}
+
+
 .select-button {
     margin-bottom: 5px;
     margin-left: 50%;
@@ -30,67 +51,79 @@ h1 {
 
 h2 {
     font-weight: 700;
-    margin-right: auto;
-    margin-left: 50%;
-    transform: translateX(-50%);
+    opacity: 70%;
+    //margin-right: auto;
+    //margin-left: 50%;
+    //transform: translateX(-50%);
 }
 
+#pool-heading {
+    width:200px;
+    display: flex;
+    justify-content: center;
+}
 #piece-pool-container {
-    position: relative;
-    width: 120px;
+    //position: relative;
+    width: 300px;
+    height: 700px;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-#left-sidebar {
-    position: fixed;
-    left: 0;
-    top: 0px;
+#left-container {
+    //position: fixed;
+    //left: 0;
+    //top: 100px;
 }
 
 .message-container {
+    display: flex;
+    width: 100%;
+    height: 200px;
+    margin-top: 57px;
+    box-sizing: border-box;
+    background-color: white;
+    opacity: 70%;
+    border: 5px solid black;
+    border-radius: 30px;
+    color:black;
+    font-size: 40px;
     //margin-right: 0px;
-    margin-left: 50%;
-    transform: translateX(-50%);
+    //margin-left: 50%;
+    //transform: translateX(-50%);
+    align-items: center;
+    justify-content: center;;
     p {
         //width: 100%;
-        margin-left: 50%;
-        transform: translateX(-50%);
+        //margin-left: 50%;
+        //transform: translateX(-50%);
     }
 }
 #piece-pool {
     box-sizing: border-box;
-    height: 600px;
-    width: 100px;
+    height: 700px;
+    width: 200px;
     display: flex;
-    justify-content: left;
+    justify-content: space-around;
     flex-wrap: wrap;
+    margin-top: 5px;
 }
 
 .piece-pool-item {
     position: relative;
-    width: 50px;
+    width: 75px;
     height: 75px;
-    z-index: 1;
-    border: 1px solid black;
-    // The canvas is the first child of the ul
-    &:nth-child(2n) {
-        border-left: 2px solid black;
-    }
-    &:nth-child(odd) {
-        border-right: 2px solid black;
-    }
-    &:nth-child(2), &:nth-child(3) {
-        border-top: 2px solid black;
-    }
-    &:nth-child(16), &:last-child {
-        border-bottom: 2px solid black;
-    }
+    margin: 5px;
+    z-index: 5;
     &.selected {
         background-color: gray;
         opacity: 70%;
+        border-radius: 15px;
     }
+    border: 5px solid black;
+    border-radius: 15px;
+    
 }
 
 #pieces-to-play {
@@ -105,6 +138,11 @@ h2 {
     justify-content: center;
     .piece-to-play-container {
         margin: 10px;
+        h2 {
+            margin-right: auto;
+            margin-left: 50%;
+            transform: translateX(-50%);
+        }
         canvas {
             margin-top: 5px;
             border: 2px solid black;
@@ -114,7 +152,7 @@ h2 {
 }
 
 #game {
-    margin-left: 150px;
+    //margin-left: 150px;
 }
 
 #instructions {
@@ -123,6 +161,7 @@ h2 {
         li {
             list-style: disc;
             margin-left: 15px;
+            margin-top: 5px;
         }
     }
 }
