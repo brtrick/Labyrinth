@@ -10,17 +10,15 @@ export default class Quarto {
         this.piecePoolHTML = document.getElementById("piece-pool");
         this.boardHTML = document.getElementById("board");
         this.selectedPiece = null;
-        this.player1 = "Player 1";
-        this.player2 = "Player 2";
+        this.player1 = "PLAYER 1";
+        this.player2 = "PLAYER 2";
         this.currentPlayer = 1;
         this.opposingPlayer = 2;
 
         this.handlePiecePoolClick = this.handlePiecePoolClick.bind(this);
         this.handleBoardClick = this.handleBoardClick.bind(this);
         
-        // const msg = document.getElementById("message");
-        // msg.innerHTML =`${this['player' + this.opposingPlayer]}, select a piece for ${this['player' + this.currentPlayer]} to play.`;
-        printMessage(`${this['player' + this.opposingPlayer]}, select a piece for ${this['player' + this.currentPlayer]} to play.`);
+        printMessage(`${this['player' + this.opposingPlayer]}:\nSelect a piece for ${this['player' + this.currentPlayer]} to play`);
         this.activatePiecePool();
     }
 
@@ -37,7 +35,7 @@ export default class Quarto {
         this.piecePool.currentSelection = idx;
         this.selectedPiece = this.piecePool.pool[idx];
         this.piecePool[`player${this.currentPlayer}PieceToPlay`].addPiece(this.selectedPiece);
-        printMessage(`${this['player' + this.currentPlayer]}, click on a board space to play the selected piece.`);  
+        printMessage(`${this['player' + this.currentPlayer]}:\nClick a circle on the board to play the selected piece`);  
         this.piecePoolHTML.removeEventListener("click", this.handlePiecePoolClick);
         this.activateBoard();   
     }
@@ -73,7 +71,7 @@ export default class Quarto {
                 this.piecePool[`player${this.currentPlayer}PieceToPlay`].removePiece();
                 if (!this.board.isGameWon(idx) && !this.board.isGameTie()) {
                     [this.currentPlayer, this.opposingPlayer] = [this.opposingPlayer, this.currentPlayer]; 
-                    printMessage(`${this['player' + this.opposingPlayer]}, select a piece for ${this['player' + this.currentPlayer]} to play.`);
+                    printMessage(`${this['player' + this.opposingPlayer]}:\nSelect a piece for ${this['player' + this.currentPlayer]} to play`);
                     this.boardHTML.removeEventListener("click", this.handleBoardClick);
                     this.activatePiecePool();
                     return;

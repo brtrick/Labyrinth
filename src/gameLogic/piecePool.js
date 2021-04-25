@@ -13,7 +13,7 @@ export default class PiecePool {
         this.player2PieceToPlay = new PieceToPlay();
         for (let i=1; i <=2; i++) {
             let ptpHTML = document.getElementById(`player${i}-ptp`);
-            ptpHTML.append(this[`player${i}PieceToPlay`].renderer.domElement);
+            ptpHTML.prepend(this[`player${i}PieceToPlay`].renderer.domElement);
         }
         this.scenes = [];
 
