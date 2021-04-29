@@ -103,7 +103,11 @@ export default class Board {
     }
 
     markWin(winningSquares) {
-        printMessage(`Win with ${this.winningAttribute} on ${winningSquares}!`);
+        winningSquares.forEach ((square) => {
+            const mesh = this.scene.getObjectByName(square);
+            mesh.material.uniforms.fill.value = true;
+        })
+        // printMessage(`Win with ${this.winningAttribute} on ${winningSquares}!`);
     }
 
     initScene() {
@@ -170,13 +174,15 @@ export default class Board {
         uniforms.radius.value = .4;
         uniforms.strokeWidth.value = .05;
         let index = 0;
-        for (let y = 1.5; y >= -1.5; y--) {
-            for (let x = -1.5; x <=1.5; x++) {
-                let square = new THREE.Mesh(unitSquare, new THREE.ShaderMaterial({
-                    uniforms: uniforms,
+        const material = new THREE.ShaderMaterial({
+                    uniforms: Object.assign({}, uniforms),
                     vertexShader: circleVertexShader(),
                     fragmentShader: circleFragmentShader()
-                }));
+                });
+        for (let y = 1.5; y >= -1.5; y--) {
+            for (let x = -1.5; x <=1.5; x++) {
+                let square = new THREE.Mesh(unitSquare, material.clone());
+                square.name=index;
                 square.userData = {
                     boardId: index++,
                     empty: true
@@ -216,6 +222,7 @@ const circleFragmentShader = function () {
         uniform bool fill;
 
         varying vec3 vUv;
+        varying vec3 vColor;
 
         void main() {
             vec2 pos = abs(vUv.xy);

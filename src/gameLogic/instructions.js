@@ -31,8 +31,6 @@ export default class Instructions {
         this.gameMechanics.element.addEventListener("click", (e) => {
             this.processClick(e, "gameMechanics");
         });
-
-        // displayInstructions();
     }
     
     processClick (e, field) {
@@ -61,9 +59,4 @@ export default class Instructions {
         this[field].hidden = !this[field].hidden;
         this.prev = field;
     }
-    // displayInstructions(){
-
-    // }
-
-
 }

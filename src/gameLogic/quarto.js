@@ -1,6 +1,6 @@
 import PiecePool from "./piecePool";
 import Board from "./board";
-import * as THREE from "three";
+import {Raycaster, Vector2} from "three";
 
 export default class Quarto {
     
@@ -29,7 +29,6 @@ export default class Quarto {
     handlePiecePoolClick(e) {
         const idx = e.target.dataset.idx;
         if (this.piecePool.pool[idx].selected) return null;
-        console.log(idx);
         e.target.classList.add("selected");
         this.piecePool.pool[idx].selected = true;
         this.piecePool.currentSelection = idx;
@@ -45,9 +44,9 @@ export default class Quarto {
     }
 
     handleBoardClick (e) {
-        const raycaster = new THREE.Raycaster();
-        const mouse = new THREE.Vector2();
-        const size = new THREE.Vector2();
+        const raycaster = new Raycaster();
+        const mouse = new Vector2();
+        const size = new Vector2();
 
         this.board.renderer.getSize(size);
         mouse.x= (e.offsetX / size.x) * 2 - 1;
@@ -69,7 +68,11 @@ export default class Quarto {
                 this.board.placePieceOnBoard(this.selectedPiece, idx);
                 this.selectedPiece = null;
                 this.piecePool[`player${this.currentPlayer}PieceToPlay`].removePiece();
-                if (!this.board.isGameWon(idx) && !this.board.isGameTie()) {
+                if (this.board.isGameWon(idx)) 
+                    printMessage(`${this['player' + this.currentPlayer]} wins with 4 ${this.board.winningAttribute} pieces in a row!`);
+                else if (this.board.isGameTie())
+                    printMessage("Tie Game!");
+                else {
                     [this.currentPlayer, this.opposingPlayer] = [this.opposingPlayer, this.currentPlayer]; 
                     printMessage(`${this['player' + this.opposingPlayer]}:\nSelect a piece for ${this['player' + this.currentPlayer]} to play`);
                     this.boardHTML.removeEventListener("click", this.handleBoardClick);
