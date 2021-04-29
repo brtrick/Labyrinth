@@ -175,14 +175,14 @@ export default class Board {
         uniforms.strokeWidth.value = .05;
         let index = 0;
         const material = new THREE.ShaderMaterial({
-                    uniforms: Object.assign({}, uniforms),
+                    uniforms: uniforms,
                     vertexShader: circleVertexShader(),
                     fragmentShader: circleFragmentShader()
                 });
         for (let y = 1.5; y >= -1.5; y--) {
             for (let x = -1.5; x <=1.5; x++) {
                 let square = new THREE.Mesh(unitSquare, material.clone());
-                square.name=index;
+                square.name=index; // used to find and highlight winning Board squares 
                 square.userData = {
                     boardId: index++,
                     empty: true
@@ -222,7 +222,6 @@ const circleFragmentShader = function () {
         uniform bool fill;
 
         varying vec3 vUv;
-        varying vec3 vColor;
 
         void main() {
             vec2 pos = abs(vUv.xy);
