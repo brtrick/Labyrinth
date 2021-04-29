@@ -53,8 +53,9 @@ export default class PieceToPlay extends PieceContainer {
     
     animate () {
         this.animationId = requestAnimationFrame(this.animate);
-        if (this.scene.userData.tall) this.camera.position.set(0, -3, 2.2);
-        else this.camera.position.set(-.1,-2.8,2.4);
+        if (this.scene.userData.tall) this.camera.position.set(0, -3.4, 2.6);
+        // if (this.scene.userData.tall) this.camera.position.set(0, -3, 2.2);
+        else this.camera.position.set(-.1,-1.8,2.6);
         this.camera.updateMatrix();
         this.controls.update();
         this.renderer.render( this.scene, this.camera );
@@ -62,6 +63,11 @@ export default class PieceToPlay extends PieceContainer {
     
     addPiece(piece) {
         this.piece = piece.model.clone();
+        if (piece.tall) {
+            this.piece.translateY(-.95); 
+            this.piece.translateX(+.1); 
+        }
+
         this.scene.add(this.piece);
         this.scene.userData.tall = piece.tall;
     }

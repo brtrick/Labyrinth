@@ -17,7 +17,7 @@ export default class PiecePool {
         }
         this.scenes = [];
 
-        this.camera = new THREE.PerspectiveCamera( 50, 50/120, 2, 200 );
+        this.camera = new THREE.PerspectiveCamera( 50, 50/120, .1, 200 );
         // this.camera.position.set(2,1,3);
         // this.camera.position.set(-0.5680264454765832, -2.4838988328553184, 3.0033411260362164);
         this.camera.position.set(-.7, -1.8, 3);
@@ -67,6 +67,10 @@ export default class PiecePool {
             
             // Create scene
             const scene = new THREE.Scene();
+            if (piece.tall) {
+                piece.model.translateY(-.23);
+                piece.model.translateX(-.1);
+            }
             scene.add(piece.model);
             this.setLights(scene);
             scene.background = new THREE.Color(0xd3d3d3);
