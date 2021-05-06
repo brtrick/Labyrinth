@@ -43,11 +43,5 @@ export default class Piece {
         return new THREE.Mesh( geometry, material );
     }
 
-    // initHollowTop() {
-    //     const sphereGeo = new THREE.SphereGeometry (.4, 200, 200, 0, Math.PI*2, Math.PI/2, Math.PI);
-    //     const material = this.dark ?
-    //         new THREE.MeshStandardMaterial( { map: textureD, normalMap: normalD, roughnessMap: roughnessD} ) :
-    //         new THREE.MeshStandardMaterial( { map: texture, normalMap: normal, roughnessMap: roughness} );material.side = THREE.DoubleSide;
-    //     return new THREE.Mesh (sphereGeo, material);
-    // }
+    
 }

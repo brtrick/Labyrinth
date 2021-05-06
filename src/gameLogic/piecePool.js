@@ -61,7 +61,8 @@ export default class PiecePool {
         this.pool.forEach ((piece, idx) => {
 
             let li = document.createElement('li');
-            li.classList.add("piece-pool-item", `item${idx}`);
+            li.classList.add("piece-pool-item");
+            li.setAttribute("id", `item${idx}`);
             li.setAttribute("data-idx", `${idx}`);
             piecePool.append(li);
             
