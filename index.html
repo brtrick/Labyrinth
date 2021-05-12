@@ -26,7 +26,7 @@
 <title>Quarto!</title>
 </head>
 
-<body>
+<body class="modal-open">
     <h1><span>Quarto!</span></h1>
     
     <div class="main-content">
@@ -106,7 +106,24 @@
             </div>
         </div>
     </div>
-    
+    <div id="modal">
+        <div id="modal-background">
+            <form id="modal-form">
+                <p>Player 1</p>
+                    <input id="player1-input" type="text" name="player1" placeholder="Name"/>
+                <p>Player 2</p>
+                    <input id="player2-input-AI1" type="radio" name="player2" value="Bob" checked/>
+                    <label for="player2-input-AI1">Bob (AI novice)</label>
+                    <input id="player2-input-AI2" type="radio" name="player2" value="Sally"/>
+                    <label for="player2-input-AI2">Sally (AI intermediate)</label>
+                    <input id="player2-input-human" type="radio" name="player2" value="human"/>  
+                    <label for="player2-input-human">Human Player: 
+                        <input id="player2-input" type="text" name="player2-human" placeholder="Player 2"/>
+                    </label>
+                <button id="modal-submit" type="button">Play!</button>
+            </form>
+        </div>
+    </div>
     <script src="./dist/main.js"></script>
 
 </body>
