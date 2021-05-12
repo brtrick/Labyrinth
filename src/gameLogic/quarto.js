@@ -77,7 +77,7 @@ export default class Quarto {
         
         // Don't want to select board spaces _through_ a piece,
         // so just return if first object hit is a piece 
-        if (intersects[0].object.userData.piece) return;
+        if (intersects[0] && intersects[0].object.userData.piece) return;
         
         for (let i = 0; i < intersects.length; i++) {
             if (intersects[i].object.userData.boardId !== undefined) {
