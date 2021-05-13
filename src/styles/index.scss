@@ -1,9 +1,12 @@
-$dark: #483C32;
-$light: #fbf3d4;
+@import "colors";
+//$dark-gray: rgba(42, 42, 46, 1);
+//$gray: #d3d3d3;
+//$gray-shadow: #d3d3d384;
+//$gray-shadow-light: #d3d3d3c3;
 
 body {
     font-family: 'Roboto', Arial, Helvetica, sans-serif;
-    background-color: rgba(42, 42, 46, 1);
+    background-color: $dark-gray;
     //background-color: rgba(42, 42, 46, 1);
     color:white;
 }
@@ -36,7 +39,8 @@ h1 {
 
 #canvas {
     position: absolute;
-    background-color:rgba(42, 42, 46, 1);
+    background-color: $dark-gray;
+    //background-color:rgba(42, 42, 46, 1);
 }
 
 #board {
@@ -45,11 +49,29 @@ h1 {
     margin-top: 30px;
 }
 
-
-.select-button {
+#spacer {
+    height: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.button {
     margin-bottom: 5px;
-    margin-left: 50%;
-    transform: translateX(-50%);
+    height: 40px;
+    font-size: inherit;
+    border-radius: 5px;
+    font-weight: 700;
+    background-color: $gray;
+    box-shadow: 0 3px $gray-shadow;
+    &:active {
+        //background-color: $gray-shadow;
+        //box-shadow: none;
+        //top: 3px;
+    }
+    &:hover{
+        //background-color: $gray-shadow-light;
+        //cursor: pointer;
+    }
 }
 
 h2 {
@@ -66,6 +88,7 @@ h2 {
     display: flex;
     justify-content: center;
 }
+
 #piece-pool-container {
     //position: relative;
     width: 300px;
@@ -86,7 +109,7 @@ h2 {
     width: 100%;
     height: 160px;
     //margin-top: 5px;
-    margin-top: 90px;
+    //margin-top: 90px;
     padding-left: 10px;
     box-sizing: border-box;
     background-color: white;
@@ -107,6 +130,7 @@ h2 {
         //transform: translateX(-50%);
     }
 }
+
 #piece-pool {
     box-sizing: border-box;
     height: 700px;

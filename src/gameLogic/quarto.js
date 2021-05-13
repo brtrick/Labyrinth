@@ -17,17 +17,16 @@ export default class Quarto {
         this.opposingPlayer = 2;
 
         this.modal = document.getElementById("modal");
-        // this.form = document.getElementById("modal-form");
         this.submitButton = document.getElementById("modal-submit");
         this.body = document.getElementsByClassName("modal-open")[0];
 
-        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleModalSubmit = this.handleModalSubmit.bind(this);
         // Listen for click instead of submit so url will not update
-        this.submitButton.addEventListener("click", this.handleSubmit);
+        this.submitButton.addEventListener("click", this.handleModalSubmit);
+        this.initializeModalRadioButtons();
 
         this.handlePiecePoolClick = this.handlePiecePoolClick.bind(this);
         this.handleBoardClick = this.handleBoardClick.bind(this);
-        
     }
     
     startGame () {
@@ -35,15 +34,34 @@ export default class Quarto {
         this.activatePiecePool();
     }
 
-    handleSubmit (e) {
+    initializeModalRadioButtons () {
+        const AI1RadioButton = document.getElementById("player2-input-AI1");
+        const AI2RadioButton = document.getElementById("player2-input-AI2");
+        const humanRadioButton = document.getElementById("player2-input-human");
+
+        AI1RadioButton.addEventListener("click", this.handlePlayer2ModalInput);
+        AI2RadioButton.addEventListener("click", this.handlePlayer2ModalInput);
+        humanRadioButton.addEventListener("click", this.handlePlayer2ModalInput);
+        
+        const humanNameInput = document.getElementById("player2-input")
+        humanNameInput.style.visibility = humanRadioButton.checked ? "visible" : "hidden";
+    }
+
+    handlePlayer2ModalInput (e) {
+        const humanRadioButton = document.getElementById("player2-input-human");
+        const humanNameInput = document.getElementById("player2-input")
+        humanNameInput.style.visibility = humanRadioButton.checked ? "visible" : "hidden";
+    }
+
+    handleModalSubmit (e) {
         e.preventDefault();
         e.stopPropagation();
-        const player1Input = document.getElementById("player1-input").value;
-        if (player1Input != "") {
-            this.player1 = player1Input;
-            const player1PieceToPlay = document.getElementById("player1-piece-to-play-text");
-            player1PieceToPlay.innerHTML = player1Input;
-        }
+        let player1Input = document.getElementById("player1-input").value;
+        player1Input = (player1Input === "" ? "Player 1" : player1Input);
+        this.player1 = player1Input;
+        const player1PieceToPlay = document.getElementById("player1-piece-to-play-text");
+        player1PieceToPlay.innerHTML = player1Input;
+        
         const player2Inputs = document.getElementsByName("player2");
         for (let i=0; i<player2Inputs.length; i++) {
             if (!player2Inputs[i].checked) continue;
@@ -52,16 +70,15 @@ export default class Quarto {
                 case 0:
                 case 1:
                     this.AILevel = i+1;
-                    this.player2 = `${player2Inputs[i].value} (AI)`;
+                    this.player2 = `${player2Inputs[i].value}`;
                     player2PieceToPlay.innerHTML = this.player2;
                     break;
                 default:
                     this.AILevel = 0;
-                    const player2Input = document.getElementById("player2-input").value;
-                    if (player2Input != "") {
-                        this.player2 = player2Input;
-                        player2PieceToPlay.innerHTML = player2Input;
-                    }                    
+                    let player2Input = document.getElementById("player2-input").value;
+                    player2Input = (player2Input === "" ? "Player 2" : player2Input);
+                    this.player2 = player2Input;
+                    player2PieceToPlay.innerHTML = player2Input;
             }
             break;
         }

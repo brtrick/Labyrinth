@@ -44,17 +44,22 @@
             <div id="board-container">
                 <canvas id="board" width="800px" height="405px"></canvas>
             </div>
-            <div class="message-container"><p id="message"></p></div>
+            <div id="spacer">
+                <button type="button" class="button">Play Again</button>
+            </div>
+            <div class="message-container">
+                <p id="message"></p>
+            </div>
         </div>
         <div class="right-container">
             <div id="pieces-to-play">
                 <h2>Pieces to Play</h2>
                 <div id="pieces-to-play-container">
                     <div id="player1-ptp" class="piece-to-play-container">
-                        <h2 id="player1-piece-to-play-text">PLAYER 1</h2>
+                        <h2 id="player1-piece-to-play-text"></h2>
                     </div>
                     <div id="player2-ptp" class="piece-to-play-container">
-                        <h2 id="player2-piece-to-play-text">PLAYER 2</h2>
+                        <h2 id="player2-piece-to-play-text"></h2>
                     </div>
                 </div>
             </div>
@@ -109,18 +114,33 @@
     <div id="modal">
         <div id="modal-background">
             <form id="modal-form">
-                <p>Player 1</p>
-                    <input id="player1-input" type="text" name="player1" placeholder="Name"/>
-                <p>Player 2</p>
-                    <input id="player2-input-AI1" type="radio" name="player2" value="Bob" checked/>
-                    <label for="player2-input-AI1">Bob (AI novice)</label>
-                    <input id="player2-input-AI2" type="radio" name="player2" value="Sally"/>
-                    <label for="player2-input-AI2">Sally (AI intermediate)</label>
-                    <input id="player2-input-human" type="radio" name="player2" value="human"/>  
-                    <label for="player2-input-human">Human Player: 
-                        <input id="player2-input" type="text" name="player2-human" placeholder="Player 2"/>
-                    </label>
-                <button id="modal-submit" type="button">Play!</button>
+                <div id="modal-form-header">
+                    <h2>Input Players</h2>
+                </div>
+                <div id="modal-form-body">
+                    <h3>Player 1</h3>
+                        <input id="player1-input" class="player-name-input" type="text" name="player1" placeholder="Name"/>
+                    <h3>Player 2</h3>
+                        <ul id="player2-options">
+                            <li>
+                                <input id="player2-input-AI1" type="radio" name="player2" value="Panda" checked />
+                                <label for="player2-input-AI1">Panda (AI novice)</label>
+                            </li>
+                            <li>
+                                <input id="player2-input-AI2" type="radio" name="player2" value="Wise Owl"/>
+                                <label for="player2-input-AI2">Wise Owl (AI intermediate)</label>
+                            </li>
+                            <li>
+                                <input id="player2-input-human" type="radio" name="player2" value="human" />  
+                                <label for="player2-input-human">Human Player 
+                                    <input id="player2-input" class="player-name-input" type="text" name="player2-human" placeholder="Name"/>
+                                </label>
+                            </li>
+                        </ul>
+                    <div id="modal-button-container">
+                        <button id="modal-submit" class="button" type="button">Play!</button>
+                    </div>
+                </div>
             </form>
         </div>
     </div>
