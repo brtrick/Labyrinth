@@ -13,6 +13,7 @@ export default class PiecePool {
         this.player2PieceToPlay = new PieceToPlay();
         for (let i=1; i <=2; i++) {
             let ptpHTML = document.getElementById(`player${i}-ptp`);
+            if (ptpHTML.firstChild) ptpHTML.removeChild(ptpHTML.firstChild);
             ptpHTML.prepend(this[`player${i}PieceToPlay`].renderer.domElement);
         }
         this.scenes = [];
@@ -58,6 +59,11 @@ export default class PiecePool {
 
     initDisplay() {
         const piecePool = document.getElementById("piece-pool");
+        const canvas = piecePool.firstElementChild;
+        const context = canvas.getContext('2d');
+        if (context) context.clearRect(0, 0, canvas.width, canvas.height);
+        while (piecePool.lastChild != canvas)
+            piecePool.removeChild(piecePool.lastChild)
         this.pool.forEach ((piece, idx) => {
 
             let li = document.createElement('li');

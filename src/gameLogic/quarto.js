@@ -17,13 +17,17 @@ export default class Quarto {
         this.opposingPlayer = 2;
 
         this.modal = document.getElementById("modal");
-        this.submitButton = document.getElementById("modal-submit");
+        this.modalSubmitButton = document.getElementById("modal-submit");
         this.body = document.getElementsByClassName("modal-open")[0];
 
         this.handleModalSubmit = this.handleModalSubmit.bind(this);
         // Listen for click instead of submit so url will not update
-        this.submitButton.addEventListener("click", this.handleModalSubmit);
+        this.modalSubmitButton.addEventListener("click", this.handleModalSubmit);
         this.initializeModalRadioButtons();
+
+        this.resetButton = document.getElementById("play-again-button");
+        this.resetGame = this.resetGame.bind(this);
+        this.resetButton.addEventListener("click", this.resetGame)
 
         this.handlePiecePoolClick = this.handlePiecePoolClick.bind(this);
         this.handleBoardClick = this.handleBoardClick.bind(this);
@@ -34,6 +38,18 @@ export default class Quarto {
         this.activatePiecePool();
     }
 
+    resetGame(e) {
+        e.preventDefault();
+        this.piecePool = new PiecePool(); 
+        this.board = new Board();
+        this.currentPlayer = 1;
+        this.body.classList.add("modal-open");
+        this.modal.classList.remove("hidden"); 
+        this.resetButton.style.visibility = "hidden"
+    }
+
+    // initializeModalRadioButtons and handlePlayer2ModalInput enable the 
+    // textbox for Player 2's Name to appear in the modal only when Human Player is checked.
     initializeModalRadioButtons () {
         const AI1RadioButton = document.getElementById("player2-input-AI1");
         const AI2RadioButton = document.getElementById("player2-input-AI2");
@@ -47,7 +63,7 @@ export default class Quarto {
         humanNameInput.style.visibility = humanRadioButton.checked ? "visible" : "hidden";
     }
 
-    handlePlayer2ModalInput (e) {
+    handlePlayer2ModalInput () {
         const humanRadioButton = document.getElementById("player2-input-human");
         const humanNameInput = document.getElementById("player2-input")
         humanNameInput.style.visibility = humanRadioButton.checked ? "visible" : "hidden";
@@ -172,7 +188,7 @@ export default class Quarto {
         
         if (this.AILevel === 0 || this.currentPlayer === 1)
             this.boardHTML.removeEventListener('click', this.handleBoardClick);
-
+        this.resetButton.style.visibility = "visible";
     }
 
     AIChooseBoardSpot() {

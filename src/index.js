@@ -1,5 +1,4 @@
 import "./styles/reset.scss";
-//import "./styles/colors.scss";
 import "./styles/index.scss";
 import "./styles/instructions.scss";
 import "./styles/modal.scss";
