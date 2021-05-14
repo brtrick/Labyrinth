@@ -43,6 +43,7 @@ export default class Quarto {
         this.piecePool = new PiecePool(); 
         this.board = new Board();
         this.currentPlayer = 1;
+        this.opposingPlayer = 2;
         this.body.classList.add("modal-open");
         this.modal.classList.remove("hidden"); 
         this.resetButton.style.visibility = "hidden"

@@ -60,12 +60,9 @@ export default class PiecePool {
     initDisplay() {
         const piecePool = document.getElementById("piece-pool");
         const canvas = piecePool.firstElementChild;
-        const context = canvas.getContext('2d');
-        if (context) context.clearRect(0, 0, canvas.width, canvas.height);
         while (piecePool.lastChild != canvas)
             piecePool.removeChild(piecePool.lastChild)
         this.pool.forEach ((piece, idx) => {
-
             let li = document.createElement('li');
             li.classList.add("piece-pool-item");
             li.setAttribute("id", `item${idx}`);
