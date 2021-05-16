@@ -16,7 +16,6 @@ export default class Board {
         this.renderer = new THREE.WebGLRenderer({canvas: canvas, antialias: true});
         this.controls = new OrbitControls(this.camera, this.renderer.domElement);
         this.controls.enableZoom = false;
-        this.animationID = null;
         
         this.animate = this.animate.bind(this);
         this.initScene();
@@ -155,7 +154,7 @@ export default class Board {
     }
 
     animate () {
-            this.animationID = requestAnimationFrame( this.animate );
+            requestAnimationFrame( this.animate );
             this.controls.update();
             this.renderer.render( this.scene, this.camera );
     }
