@@ -7,8 +7,7 @@ import {printMessage} from './quarto'
 
 export default class Board {
     constructor() {
-        this.board = Array(16);
-        this.winningAttribute = "";
+        this.initGameVariables();
 
         this.scene = new THREE.Scene();
         this.scene.rotateX(-Math.PI/2);
@@ -17,11 +16,32 @@ export default class Board {
         this.renderer = new THREE.WebGLRenderer({canvas: canvas, antialias: true});
         this.controls = new OrbitControls(this.camera, this.renderer.domElement);
         this.controls.enableZoom = false;
-
-        this.currentPiece = null;
-        this.numMoves = 0;
+        this.animationID = null;
+        
+        this.animate = this.animate.bind(this);
         this.initScene();
     }
+    
+    initGameVariables() {
+        this.board = Array(16);
+        this.winningSquares = []
+        this.winningAttribute = "";
+        this.currentPiece = null;
+        this.numMoves = 0;
+    }
+
+    reset() {
+        this.winningSquares.forEach ((square) => {
+            const mesh = this.scene.getObjectByName(square);
+            mesh.material.uniforms.fill.value = false;
+        })
+        let piece;
+        while (piece = this.scene.getObjectByName("piece"))
+            this.scene.remove(piece);
+        this.initGameVariables();
+        this.animate();
+    }
+        
 
     isGameTie() {
         // Assumes game has already checked for win
@@ -103,11 +123,11 @@ export default class Board {
     }
 
     markWin(winningSquares) {
-        winningSquares.forEach ((square) => {
+        this.winningSquares = winningSquares;
+        this.winningSquares.forEach ((square) => {
             const mesh = this.scene.getObjectByName(square);
             mesh.material.uniforms.fill.value = true;
         })
-        // printMessage(`Win with ${this.winningAttribute} on ${winningSquares}!`);
     }
 
     initScene() {
@@ -121,7 +141,6 @@ export default class Board {
         dirLight.position.set(10,20,5);
         this.scene.add(ambientLight);
         this.scene.add(dirLight);
-        // this.scene.background = new THREE.Color (0xd3d3d3);
         this.scene.background = new THREE.Color (0xffffff);
 
         this.camera.position.set(0.5, 4.345, -6);
@@ -132,13 +151,13 @@ export default class Board {
         
         this.initBoard();
 
-        const animate = function () {
-            requestAnimationFrame( animate.bind(this) );
+        this.animate();
+    }
+
+    animate () {
+            this.animationID = requestAnimationFrame( this.animate );
             this.controls.update();
             this.renderer.render( this.scene, this.camera );
-        };
-
-        animate.bind(this)();
     }
 
     initBoard() {
@@ -178,7 +197,7 @@ export default class Board {
                     uniforms: uniforms,
                     vertexShader: circleVertexShader(),
                     fragmentShader: circleFragmentShader()
-                });
+        });
         for (let y = 1.5; y >= -1.5; y--) {
             for (let x = -1.5; x <=1.5; x++) {
                 let square = new THREE.Mesh(unitSquare, material.clone());
@@ -197,6 +216,7 @@ export default class Board {
         const model = piece.model.clone();
         model.position.set(-1.5 + (index%4), 1.5 - Math.floor(index/4), 0);
             // (piece.tall ? .75 : .375));
+        model.name = "piece"
         this.scene.add(model);
         this.numMoves++;
     }
