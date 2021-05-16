@@ -13,7 +13,6 @@ export default class PiecePool {
         this.player2PieceToPlay = new PieceToPlay();
         for (let i=1; i <=2; i++) {
             let ptpHTML = document.getElementById(`player${i}-ptp`);
-            if (ptpHTML.firstChild) ptpHTML.removeChild(ptpHTML.firstChild);
             ptpHTML.prepend(this[`player${i}PieceToPlay`].renderer.domElement);
         }
         this.scenes = [];
@@ -53,15 +52,22 @@ export default class PiecePool {
 
         this.animate = this.animate.bind(this);
         
-        this.animationId = null;
+        this.animationID = null;
         this.initDisplay();
+    }
+
+    reset() {
+        for (let i=0; i < 16; i++) {
+            const li = document.getElementById(`item${i}`);
+            li.classList.remove("selected");
+            this.pool[i].selected = false;
+        }
+        this.currentSelection = -1;
     }
 
     initDisplay() {
         const piecePool = document.getElementById("piece-pool");
         const canvas = piecePool.firstElementChild;
-        while (piecePool.lastChild != canvas)
-            piecePool.removeChild(piecePool.lastChild)
         this.pool.forEach ((piece, idx) => {
             let li = document.createElement('li');
             li.classList.add("piece-pool-item");
@@ -109,7 +115,7 @@ export default class PiecePool {
             this.renderer.render( scene, this.camera );
         
         }, this);
-        this.animationId = requestAnimationFrame(this.animate);
+        this.animationID = requestAnimationFrame(this.animate);
     }
 
     setLights (scene) {

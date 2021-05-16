@@ -45,14 +45,14 @@ export default class PieceToPlay extends PieceContainer {
         this.scene = new THREE.Scene();
         this.setLights(this.scene);
         this.scene.background = new THREE.Color(0xd3d3d3);
-        this.animationId = null;
+        this.animationID = null;
 
         this.animate = this.animate.bind(this);
-        this.animate();
+        this.animate(false);
     }
     
-    animate () {
-        this.animationId = requestAnimationFrame(this.animate);
+    animate (shouldAnimate) {
+        this.animationID = shouldAnimate ?  requestAnimationFrame(this.animate) : null;
         if (this.scene.userData.tall) this.camera.position.set(0, -3.4, 2.6);
         // if (this.scene.userData.tall) this.camera.position.set(0, -3, 2.2);
         else this.camera.position.set(-.1,-1.8,2.6);
@@ -70,11 +70,15 @@ export default class PieceToPlay extends PieceContainer {
 
         this.scene.add(this.piece);
         this.scene.userData.tall = piece.tall;
+        this.animate(true);
     }
     
     removePiece() {
         this.scene.remove(this.piece);
         this.piece = null;
         this.scene.userData.tall = null;
+        cancelAnimationFrame(this.animationID);
+        // render once to remove the piece
+        this.animate(false);
     }
 }

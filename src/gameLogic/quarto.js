@@ -41,8 +41,8 @@ export default class Quarto {
     resetGame(e) {
         e.preventDefault();
         this.board.reset();
-        // this.piecePool.reset(); 
-        this.piecePool = new PiecePool(); 
+        this.piecePool.reset(); 
+        // this.piecePool = new PiecePool(); 
         this.currentPlayer = 1;
         this.opposingPlayer = 2;
         this.body.classList.add("modal-open");
