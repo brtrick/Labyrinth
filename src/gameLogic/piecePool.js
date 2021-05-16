@@ -1,4 +1,4 @@
-import Piece from "./piecexy"
+import Piece from "./piece"
 import PieceToPlay from './pieceToPlay'
 import * as THREE from "three";
 import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls.js';
@@ -17,7 +17,7 @@ export default class PiecePool {
         }
         this.scenes = [];
 
-        this.camera = new THREE.PerspectiveCamera( 50, 50/120, .1, 200 );
+        this.camera = new THREE.PerspectiveCamera( 50, 50/120, .1, 5 );
         // this.camera.position.set(2,1,3);
         // this.camera.position.set(-0.5680264454765832, -2.4838988328553184, 3.0033411260362164);
         this.camera.position.set(-.7, -1.8, 3);

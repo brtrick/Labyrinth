@@ -1,4 +1,3 @@
-import Piece from "./piecexy"
 import * as THREE from "three";
 import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls.js';
 import * as dat from 'dat.gui'
@@ -8,7 +7,7 @@ class PieceContainer {
     constructor() {
         // const canvas = document.getElementById("piece-to-play");
         // this.camera = new THREE.PerspectiveCamera( 50, 50/120, 2, 200 );
-        this.camera = new THREE.PerspectiveCamera( 50, 100/150, 2, 100 );
+        this.camera = new THREE.PerspectiveCamera( 50, 100/150, 2, 5 );
         // this.camera.position.set(2,1,3);
         // this.camera.position.set(-.1,-2.8,2.4);
         this.camera.position.set(-.1,-5,3);

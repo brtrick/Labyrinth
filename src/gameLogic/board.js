@@ -1,8 +1,6 @@
-import Piece from "./piecexy";
-import PiecePool from "./piecePoolIndiv";
 import * as THREE from "three";
 import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls.js';
-import { BoxGeometry, PlaneGeometry, Raycaster, Vector4 } from "three";
+//import { BoxGeometry, PlaneGeometry } from "three";
 import {printMessage} from './quarto'
 
 export default class Board {
@@ -11,7 +9,7 @@ export default class Board {
 
         this.scene = new THREE.Scene();
         this.scene.rotateX(-Math.PI/2);
-        this.camera = new THREE.PerspectiveCamera( 50, 100 / 100, .5, 100 );
+        this.camera = new THREE.PerspectiveCamera( 50, 100 / 100, .5, 15 );
         const canvas = document.getElementById("board");
         this.renderer = new THREE.WebGLRenderer({canvas: canvas, antialias: true});
         this.controls = new OrbitControls(this.camera, this.renderer.domElement);
@@ -160,7 +158,7 @@ export default class Board {
     }
 
     initBoard() {
-        const boxGeo = new BoxGeometry(6, 6, .5);
+        const boxGeo = new THREE.BoxGeometry(6, 6, .5);
         // const boxGeo = new BoxGeometry(6, 6, 0.1);
         const board = new THREE.Mesh(boxGeo, new THREE.MeshStandardMaterial({color: 0x800000}));
         board.rotateZ(Math.PI/4);
@@ -176,18 +174,18 @@ export default class Board {
             radius: {type: 'float', value: 1.05},
             strokeWidth: {type:'float', value: .02}
         }
-        const boardCircleGeo = new PlaneGeometry(6, 6);
+        const boardCircleGeo = new THREE.PlaneGeometry(6, 6);
         const boardCircle = new THREE.Mesh(boardCircleGeo, new THREE.ShaderMaterial({
                     uniforms: uniforms,
                     vertexShader: circleVertexShader(),
                     fragmentShader: bigCircleFragmentShader()
-                })); 
+        })); 
         boardCircle.rotateZ(Math.PI/4);
         boardCircle.position.set(0, 0, 0);
         boardCircle.receiveShadow = true;
         this.scene.add(boardCircle);
 
-        const unitSquare = new PlaneGeometry(1,1,1,1);
+        const unitSquare = new THREE.PlaneGeometry(1,1,1,1);
         
         uniforms.radius.value = .4;
         uniforms.strokeWidth.value = .05;
