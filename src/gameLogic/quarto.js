@@ -171,13 +171,15 @@ export default class Quarto {
     }
 
     makeMove(idx) {
-        this.board.board[idx] = this.selectedPiece;
+        this.board.board.board[idx] = this.selectedPiece;
         this.board.placePieceOnBoard(this.selectedPiece, idx);
         this.selectedPiece = null;
         this.piecePool[`player${this.currentPlayer}PieceToPlay`].removePiece();
-        if (this.board.isGameWon(idx)) 
-            printMessage(`${this['player' + this.currentPlayer]} wins with 4 ${this.board.winningAttribute} pieces in a row!`);
-        else if (this.board.isGameTie())
+        if (this.board.board.isGameWon(idx)) {
+            this.board.markWin(); 
+            printMessage(`${this['player' + this.currentPlayer]} wins with 4 ${this.board.board.winningAttribute} pieces in a row!`);
+        }
+        else if (this.board.board.isGameTie())
             printMessage("Tie Game!");
         else {
             [this.currentPlayer, this.opposingPlayer] = [this.opposingPlayer, this.currentPlayer]; 

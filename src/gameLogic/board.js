@@ -1,11 +1,11 @@
 import * as THREE from "three";
 import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls.js';
-//import { BoxGeometry, PlaneGeometry } from "three";
 import {printMessage} from './quarto'
+import BasicBoard from './basicBoard'
 
 export default class Board {
     constructor() {
-        this.initGameVariables();
+        this.board = new BasicBoard();
 
         this.scene = new THREE.Scene();
         this.scene.rotateX(-Math.PI/2);
@@ -18,115 +18,19 @@ export default class Board {
         this.animate = this.animate.bind(this);
         this.initScene();
     }
-    
-    initGameVariables() {
-        this.board = Array(16);
-        this.winningSquares = []
-        this.winningAttribute = "";
-        this.currentPiece = null;
-        this.numMoves = 0;
-    }
 
     reset() {
-        this.winningSquares.forEach ((square) => {
+        this.board.winningSquares.forEach ((square) => {
             const mesh = this.scene.getObjectByName(square);
             mesh.material.uniforms.fill.value = false;
-        })
+        });
         let piece;
         while (piece = this.scene.getObjectByName("piece"))
             this.scene.remove(piece);
-        this.initGameVariables();
+        this.board.initBoard();
         this.animate();
     }
         
-
-    isGameTie() {
-        // Assumes game has already checked for win
-        if (this.numMoves === 16) {
-            printMessage("Tie Game!");
-            return true;
-        }
-        return false;
-    }
-
-    isGameWon (move) {
-        if (this.rowWinner(move)) return true;
-        if (this.columnWinner(move)) return true;
-        return this.diagonalWinner(move);
-    }
-
-    rowWinner(move) {
-        const rowOffset = Math.floor(move/4)*4;
-        for (let i = rowOffset; i < rowOffset+4; i++)
-            if (this.board[i] === undefined) return false;
-        
-        const attributes = ["tall", "dark", "hollow","box"];
-        const opposites = ["small", "light", "solid", "cylinder"];
-        for (let a = 0; a < 4; a++) {
-            for (let i = rowOffset + 1; i < rowOffset+4; i++) {
-                if (this.board[rowOffset][attributes[a]] !== this.board[i][attributes[a]]) break;
-                if (i === rowOffset+3) {
-                    this.winningAttribute = this.board[rowOffset][attributes[a]] ? attributes[a] : opposites[a];
-                    this.markWin([rowOffset, rowOffset + 1, rowOffset + 2, rowOffset + 3]);
-                    return true;
-                }
-            }
-        }
-    }
-
-    columnWinner(move) {
-        const columnOffset = move%4;
-        for (let i = columnOffset; i < 16; i += 4)
-            if (this.board[i] === undefined) return false;
-        
-        const attributes = ["tall", "dark", "hollow","box"];
-        const opposites = ["small", "light", "solid", "cylinder"];
-        for (let a = 0; a < 4; a++) {
-            for (let i = columnOffset + 4; i < 16; i += 4) {
-                if (this.board[columnOffset][attributes[a]] !== this.board[i][attributes[a]]) break;
-                if (i === columnOffset + 12) {
-                    this.winningAttribute = this.board[columnOffset][attributes[a]] ? attributes[a] : opposites[a];
-                    this.markWin([columnOffset, columnOffset + 4, columnOffset + 8, columnOffset + 12]);
-                    return true;
-                }
-            }
-        }
-    }
-
-    diagonalWinner(move) {
-        let diagonal = [0, 5, 10, 15];
-        if (!diagonal.includes(move)) {
-            diagonal = [3, 6, 9, 12];
-            if (!diagonal.includes(move)) 
-                return false;
-        }
-
-        for (let i = 0; i < 4; i++)
-            if (this.board[diagonal[i]] === undefined) return false;
-        
-        const attributes = ["tall", "dark", "hollow","box"];
-        const opposites = ["small", "light", "solid", "cylinder"];
-        for (let a = 0; a < 4; a++) {
-            for (let i = 1; i < 4; i++) {
-                if (this.board[diagonal[0]][attributes[a]] !== this.board[diagonal[i]][attributes[a]]) break;
-                if (i === 3) {
-                    this.winningAttribute = this.board[diagonal[0]][attributes[a]] ? attributes[a] : opposites[a];
-                    this.markWin(diagonal);
-                    return true;
-                }
-            }
-        }
-        
-    }
-
-    markWin(winningSquares) {
-        this.winningSquares = winningSquares;
-        this.winningSquares.forEach ((square) => {
-            const mesh = this.scene.getObjectByName(square);
-            mesh.material.uniforms.fill.value = true;
-        })
-    }
-
     initScene() {
         // this.renderer.setSize( 400, 250 );
         const boardDiv = document.getElementById("board-container");
@@ -146,7 +50,7 @@ export default class Board {
         // this.camera.position.set(1.82195, 3.06664, -3.48534);
         // this.camera.position.set(1.7018, 5.07284, -2.976548);
         
-        this.initBoard();
+        this.init3DBoard();
 
         this.animate();
     }
@@ -157,7 +61,7 @@ export default class Board {
             this.renderer.render( this.scene, this.camera );
     }
 
-    initBoard() {
+    init3DBoard() {
         const boxGeo = new THREE.BoxGeometry(6, 6, .5);
         // const boxGeo = new BoxGeometry(6, 6, 0.1);
         const board = new THREE.Mesh(boxGeo, new THREE.MeshStandardMaterial({color: 0x800000}));
@@ -215,7 +119,14 @@ export default class Board {
             // (piece.tall ? .75 : .375));
         model.name = "piece"
         this.scene.add(model);
-        this.numMoves++;
+        this.board.numMoves++;
+    }
+
+    markWin() {
+        this.board.winningSquares.forEach ((square) => {
+            const mesh = this.scene.getObjectByName(square);
+            mesh.material.uniforms.fill.value = true;
+        })
     }
 }
 
