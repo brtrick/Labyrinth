@@ -9,11 +9,15 @@ body {
     background-color: $dark-gray;
     //background-color: rgba(42, 42, 46, 1);
     color:white;
+    max-width: 1380px;
+    //border: yellow 2px solid;
+    //height: 820px;
 }
 
 h1 {
     display: flex;
     width: 100%;
+    max-width: 1280px;
     height: 100px;
     color: white;
     span {
@@ -29,12 +33,13 @@ h1 {
 
 .main-content {
     display: flex;
-
+    //border: red 2px solid;
+    //height: 700px;
 }
 
 .right-container {
     //margin-top: 100px;
-    margin-left: 50px;
+    margin-left: 30px;
 }
 
 #canvas {
@@ -63,6 +68,8 @@ h1 {
     font-weight: 700;
     background-color: $gray;
     box-shadow: 0 3px $gray-shadow;
+    display: flex;
+    align-items: center;
     &:active {
         //background-color: $gray-shadow;
         //box-shadow: none;
@@ -91,7 +98,7 @@ h2 {
 
 #piece-pool-container {
     //position: relative;
-    width: 300px;
+    width: 250px;
     height: 700px;
     display: flex;
     flex-direction: column;
@@ -99,6 +106,8 @@ h2 {
 }
 
 #left-container {
+    //border: green 2px solid;
+    //height: 700px;
     //position: fixed;
     //left: 0;
     //top: 100px;
@@ -106,9 +115,9 @@ h2 {
 
 .message-container {
     display: flex;
-    width: 100%;
+    width: 810px;
     height: 160px;
-    //margin-top: 5px;
+    margin-top: 2px;
     //margin-top: 90px;
     padding-left: 10px;
     box-sizing: border-box;
@@ -159,7 +168,7 @@ h2 {
     display:flex;
     flex-direction: column;
     align-items: center;
-    margin-right: 150px;
+    //margin-right: 150px;
 }
 
 #pieces-to-play-container {
@@ -172,7 +181,7 @@ h2 {
             justify-content: center;
         }
         canvas {
-            margin-top: 5px;
+            //margin-top: 5px;
             border: 5px solid black;
             border-radius: 15px;
             margin-bottom: 5px;
@@ -192,5 +201,37 @@ h2 {
             margin-left: 15px;
             margin-top: 5px;
         }
+    }
+}
+
+#footer {
+    margin-top: 20px;
+    font-size: 25px;
+    width: 100%;
+    max-width: 1280px;
+    display: flex;
+    justify-content: center;
+    color: $gray;
+
+    .developer-info {
+        //height: 24%;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        span {
+            padding-right: 25px;
+        }
+    }
+    .icons-container {
+        display: flex;
+        justify-content: space-around;
+    }
+    .fab, .far {
+        height: 25px;
+        padding: 0 5px;
+    }
+    .fab:hover, .far:hover {
+        color: black;
+        background: $gray;
     }
 }

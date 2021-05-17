@@ -10,21 +10,22 @@ class PieceContainer {
         this.camera = new THREE.PerspectiveCamera( 50, 100/150, 2, 5 );
         // this.camera.position.set(2,1,3);
         // this.camera.position.set(-.1,-2.8,2.4);
-        this.camera.position.set(-.1,-5,3);
+        this.camera.position.set(-.1, -5, 3);
         // const gui = new dat.GUI();
         // gui.add(this.camera.position, "x").name("PTP Camera.x").listen();
         // gui.add(this.camera.position, "y").listen();
         // gui.add(this.camera.position, "z").listen();
         this.renderer = new THREE.WebGLRenderer({ antialias: true });
         this.renderer.setSize(100, 150);
-        this.controls = new OrbitControls(this.camera, this.renderer.domElement); 
+        this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+        this.controls.enableZoom = false;
     }
 
     setLights (scene) {
         const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
         const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
         dirLight.position.set(10,20,5);
-        const pointLight = new THREE.PointLight(0xffffff, 1, 100, 2)
+        const pointLight = new THREE.PointLight(0xffffff, 1, 100, 2);
         pointLight.position.set(-5,-10, 15);
         // var gui = new dat.GUI();
         // gui.add(pointLight.position, "x").name("PTPPointLight.x");
@@ -52,10 +53,10 @@ export default class PieceToPlay extends PieceContainer {
     
     animate (shouldAnimate) {
         this.animationID = shouldAnimate ?  requestAnimationFrame(this.animate) : null;
-        if (this.scene.userData.tall) this.camera.position.set(0, -3.4, 2.6);
-        // if (this.scene.userData.tall) this.camera.position.set(0, -3, 2.2);
-        else this.camera.position.set(-.1,-1.8,2.6);
-        this.camera.updateMatrix();
+        // if (this.scene.userData.tall) this.camera.position.set(0, -3.4, 2.6);
+        // // if (this.scene.userData.tall) this.camera.position.set(0, -3, 2.2);
+        // else this.camera.position.set(-.1,-1.8,2.6);
+        // this.camera.updateMatrix();
         this.controls.update();
         this.renderer.render( this.scene, this.camera );
     }
@@ -64,9 +65,11 @@ export default class PieceToPlay extends PieceContainer {
         this.piece = piece.model.clone();
         if (piece.tall) {
             this.piece.translateY(-.95); 
-            this.piece.translateX(+.1); 
+            this.piece.translateX(+.1);
+            this.camera.position.set(0, -3.4, 2.6); 
         }
-
+        else this.camera.position.set(-.1,-1.8,2.6);
+        this.camera.updateMatrix();
         this.scene.add(this.piece);
         this.scene.userData.tall = piece.tall;
         this.animate(true);
