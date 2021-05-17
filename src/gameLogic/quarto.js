@@ -108,8 +108,10 @@ export default class Quarto {
     activatePiecePool () {
         if (this.currentPlayer === 2 || this.AILevel === 0)
             this.piecePoolHTML.addEventListener("click", this.handlePiecePoolClick);
-        else
-            this.AIChoosePiece();
+        else {
+            const piece = this['AIChoosePiece' + this.AILevel]();
+            this.choosePiece(piece);
+        }
     }
 
     handlePiecePoolClick(e) {
@@ -118,11 +120,24 @@ export default class Quarto {
         this.choosePiece(idx);   
     }
 
-    AIChoosePiece() {
+    AIChoosePiece1() {
         let idx = Math.floor(Math.random() * 16);
         while (this.piecePool.pool[idx].selected)
             idx = (idx + 1) % 16;
-        this.choosePiece(idx);
+        return idx;
+    }
+
+    AIChoosePiece2() {
+        if (this.board.board.numMoves < 3)
+            return this.AIChoosePiece1();
+        let idx = Math.floor(Math.random() * 16);
+        for (let i=0; i < 16; i++, idx = (idx + 1) % 16) {
+            if (this.piecePool.pool[idx].selected) continue;
+            if (this.findWinningMove(this.piecePool.pool[idx]) !== -1) 
+                continue;
+            return idx;
+        }
+        return this.AIChoosePiece1();
     }
 
     choosePiece(idx) {
@@ -141,8 +156,10 @@ export default class Quarto {
     activateBoard () {
         if (this.currentPlayer === 1 || this.AILevel === 0)
             this.boardHTML.addEventListener("click", this.handleBoardClick);
-        else
-            this.AIChooseBoardSpot();
+        else {
+            const move = this['AIChooseBoardSpot' + this.AILevel]();
+            this.makeMove(move);
+        }
     }
 
     handleBoardClick (e) {
@@ -195,13 +212,58 @@ export default class Quarto {
         this.resetButton.style.visibility = "visible";
     }
 
-    AIChooseBoardSpot() {
+    AIChooseBoardSpot1() {
         let idx = Math.floor(Math.random() * 16);
-        while (this.board.board[idx] !== undefined)
+        while (this.board.board.board[idx] !== undefined)
             idx = (idx + 1) % 16;      
-        this.makeMove(idx);
+        return idx;
+    }
+    
+    AIChooseBoardSpot2() {
+        if (this.board.board.numMoves < 3)
+            return this.AIChooseBoardSpot1();
+        // board = this.board.board.dup;
+        let idx = this.findWinningMove(this.selectedPiece);
+        if (idx !== -1) return idx;
+        
+        // If did not find a winning move,
+        // find a move that does not set up opponent for win
+        idx = Math.floor(Math.random() * 16);
+        for (let i=0; i < 16; i++, idx = (idx + 1) % 16) {
+            if (this.board.board.board[idx] !== undefined) continue;
+            this.board.board.board[idx] = this.selectedPiece;
+            if (!this.nextPieceMustWin()) {
+                this.board.board.board[idx] = undefined;
+                return idx;
+            }
+            this.board.board.board[idx] = undefined;
+        }
+        return this.AIChooseBoardSpot1();
+    }
+
+    // Returns the index of winning move for given piece or -1 if no move wins
+    findWinningMove(piece) {
+        for (let idx = 0; idx < 16; idx++) {
+            if (this.board.board.board[idx] !== undefined) continue;
+            this.board.board.board[idx] = piece;
+            if (this.board.board.isGameWon(idx)) {
+                this.board.board.board[idx] = undefined;
+                return idx;
+            }
+            else this.board.board.board[idx] = undefined;
+        }
+        return -1;
+    }
+
+    nextPieceMustWin() {
+        for (let i=0; i < 16; i++) {
+            if (this.piecePool.pool[i].selected) continue;
+            if (this.findWinningMove(this.piecePool.pool[i]) === -1) return false;
+        }
+        return true;
     }
 }
+
 
 export const printMessage = (msg) => {
     const msgHTML = document.getElementById("message");
