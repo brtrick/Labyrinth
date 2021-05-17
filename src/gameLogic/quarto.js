@@ -1,17 +1,17 @@
 import PiecePool from "./piecePool";
-import Board from "./board";
+import Board3D from "./board3D";
 import {Raycaster, Vector2} from "three";
 
 export default class Quarto {
     
     constructor () {
         this.piecePool = new PiecePool(); 
-        this.board = new Board();
+        this.board = new Board3D();
         this.piecePoolHTML = document.getElementById("piece-pool");
         this.boardHTML = document.getElementById("board");
         this.selectedPiece = null;
-        this.player1 = "PLAYER 1";
-        this.player2 = "PLAYER 2";
+        this.player1 = "";
+        this.player2 = "";
         this.AILevel = 1;
         this.currentPlayer = 1;
         this.opposingPlayer = 2;
@@ -39,7 +39,7 @@ export default class Quarto {
     }
 
     resetGame(e) {
-        e.preventDefault();
+        //e.preventDefault();
         this.board.reset();
         this.piecePool.reset(); 
         // this.piecePool = new PiecePool(); 
@@ -72,8 +72,8 @@ export default class Quarto {
     }
 
     handleModalSubmit (e) {
-        e.preventDefault();
-        e.stopPropagation();
+        //e.preventDefault();
+        //e.stopPropagation();
         let player1Input = document.getElementById("player1-input").value;
         player1Input = (player1Input === "" ? "Player 1" : player1Input);
         this.player1 = player1Input;
@@ -128,7 +128,7 @@ export default class Quarto {
     }
 
     AIChoosePiece2() {
-        if (this.board.board.numMoves < 3)
+        if (this.board.numMoves < 3)
             return this.AIChoosePiece1();
         let idx = Math.floor(Math.random() * 16);
         for (let i=0; i < 16; i++, idx = (idx + 1) % 16) {
@@ -188,15 +188,15 @@ export default class Quarto {
     }
 
     makeMove(idx) {
-        this.board.board.board[idx] = this.selectedPiece;
+        this.board.board[idx] = this.selectedPiece;
         this.board.placePieceOnBoard(this.selectedPiece, idx);
         this.selectedPiece = null;
         this.piecePool[`player${this.currentPlayer}PieceToPlay`].removePiece();
-        if (this.board.board.isGameWon(idx)) {
+        if (this.board.isGameWon(idx)) {
             this.board.markWin(); 
-            printMessage(`${this['player' + this.currentPlayer]} wins with 4 ${this.board.board.winningAttribute} pieces in a row!`);
+            printMessage(`${this['player' + this.currentPlayer]} wins with 4 ${this.board.winningAttribute} pieces in a row!`);
         }
-        else if (this.board.board.isGameTie())
+        else if (this.board.isGameTie())
             printMessage("Tie Game!");
         else {
             [this.currentPlayer, this.opposingPlayer] = [this.opposingPlayer, this.currentPlayer]; 
@@ -214,15 +214,14 @@ export default class Quarto {
 
     AIChooseBoardSpot1() {
         let idx = Math.floor(Math.random() * 16);
-        while (this.board.board.board[idx] !== undefined)
+        while (this.board.board[idx] !== undefined)
             idx = (idx + 1) % 16;      
         return idx;
     }
     
     AIChooseBoardSpot2() {
-        if (this.board.board.numMoves < 3)
+        if (this.board.numMoves < 3)
             return this.AIChooseBoardSpot1();
-        // board = this.board.board.dup;
         let idx = this.findWinningMove(this.selectedPiece);
         if (idx !== -1) return idx;
         
@@ -230,13 +229,13 @@ export default class Quarto {
         // find a move that does not set up opponent for win
         idx = Math.floor(Math.random() * 16);
         for (let i=0; i < 16; i++, idx = (idx + 1) % 16) {
-            if (this.board.board.board[idx] !== undefined) continue;
-            this.board.board.board[idx] = this.selectedPiece;
+            if (this.board.board[idx] !== undefined) continue;
+            this.board.board[idx] = this.selectedPiece;
             if (!this.nextPieceMustWin()) {
-                this.board.board.board[idx] = undefined;
+                this.board.board[idx] = undefined;
                 return idx;
             }
-            this.board.board.board[idx] = undefined;
+            this.board.board[idx] = undefined;
         }
         return this.AIChooseBoardSpot1();
     }
@@ -244,13 +243,13 @@ export default class Quarto {
     // Returns the index of winning move for given piece or -1 if no move wins
     findWinningMove(piece) {
         for (let idx = 0; idx < 16; idx++) {
-            if (this.board.board.board[idx] !== undefined) continue;
-            this.board.board.board[idx] = piece;
-            if (this.board.board.isGameWon(idx)) {
-                this.board.board.board[idx] = undefined;
+            if (this.board.board[idx] !== undefined) continue;
+            this.board.board[idx] = piece;
+            if (this.board.isGameWon(idx)) {
+                this.board.board[idx] = undefined;
                 return idx;
             }
-            else this.board.board.board[idx] = undefined;
+            else this.board.board[idx] = undefined;
         }
         return -1;
     }
