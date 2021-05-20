@@ -1,20 +1,11 @@
 import * as THREE from "three";
 import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls.js';
-import * as dat from 'dat.gui'
 
 class PieceContainer {
 
     constructor() {
-        // const canvas = document.getElementById("piece-to-play");
-        // this.camera = new THREE.PerspectiveCamera( 50, 50/120, 2, 200 );
         this.camera = new THREE.PerspectiveCamera( 50, 100/150, 2, 5 );
-        // this.camera.position.set(2,1,3);
-        // this.camera.position.set(-.1,-2.8,2.4);
         this.camera.position.set(-.1, -5, 3);
-        // const gui = new dat.GUI();
-        // gui.add(this.camera.position, "x").name("PTP Camera.x").listen();
-        // gui.add(this.camera.position, "y").listen();
-        // gui.add(this.camera.position, "z").listen();
         this.renderer = new THREE.WebGLRenderer({ antialias: true });
         this.renderer.setSize(100, 150);
         this.controls = new OrbitControls(this.camera, this.renderer.domElement);
@@ -27,10 +18,7 @@ class PieceContainer {
         dirLight.position.set(10,20,5);
         const pointLight = new THREE.PointLight(0xffffff, 1, 100, 2);
         pointLight.position.set(-5,-10, 15);
-        // var gui = new dat.GUI();
-        // gui.add(pointLight.position, "x").name("PTPPointLight.x");
-        // gui.add(pointLight.position, "y");
-        // gui.add(pointLight.position, "z");
+        
         scene.add(ambientLight);
         scene.add(dirLight);
         scene.add(pointLight);
@@ -53,10 +41,6 @@ export default class PieceToPlay extends PieceContainer {
     
     animate (shouldAnimate) {
         this.animationID = shouldAnimate ?  requestAnimationFrame(this.animate) : null;
-        // if (this.scene.userData.tall) this.camera.position.set(0, -3.4, 2.6);
-        // // if (this.scene.userData.tall) this.camera.position.set(0, -3, 2.2);
-        // else this.camera.position.set(-.1,-1.8,2.6);
-        // this.camera.updateMatrix();
         this.controls.update();
         this.renderer.render( this.scene, this.camera );
     }

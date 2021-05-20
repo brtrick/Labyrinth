@@ -12,16 +12,6 @@ export default class Board {
         this.numMoves = 0;
     }
 
-    // dup() {
-    //     const b = new Board();
-    //     for (let i=0; i < 16; i++)
-    //         b.board[i] = this.board[i];
-    //     b.winningAttribute = this.winningAttribute;
-    //     b.winningSquares = this.winningSquares;
-    //     b.currentPiece = this.currentPiece;
-    //     b.numMoves = this.numMoves;
-    // }
-
     isGameTie() {
         // Assumes game has already checked for win
         if (this.numMoves === 16) {

@@ -42,10 +42,8 @@ export default class Quarto {
     }
 
     resetGame(e) {
-        //e.preventDefault();
         this.board.reset();
         this.piecePool.reset(); 
-        // this.piecePool = new PiecePool(); 
         this.currentPlayer = 1;
         this.opposingPlayer = 2;
         this.body.classList.add("modal-open");
@@ -75,8 +73,6 @@ export default class Quarto {
     }
 
     handleModalSubmit (e) {
-        //e.preventDefault();
-        //e.stopPropagation();
         let player1Input = document.getElementById("player1-input").value;
         player1Input = (player1Input === "" ? "Player 1" : player1Input);
         this.player1 = player1Input;

@@ -2,7 +2,6 @@ import Piece from "./piece"
 import PieceToPlay from './pieceToPlay'
 import * as THREE from "three";
 import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls.js';
-import * as dat from 'dat.gui';
 
 export default class PiecePool {
 
@@ -18,13 +17,7 @@ export default class PiecePool {
         this.scenes = [];
 
         this.camera = new THREE.PerspectiveCamera( 50, 50/120, .1, 5 );
-        // this.camera.position.set(2,1,3);
-        // this.camera.position.set(-0.5680264454765832, -2.4838988328553184, 3.0033411260362164);
         this.camera.position.set(-.7, -1.8, 3);
-        // const gui = new dat.GUI();
-        // gui.add(this.camera.position, "x").name("PPool Camera x");
-        // gui.add(this.camera.position, "y").name("PPool Camera y");
-        // gui.add(this.camera.position, "z").name("PPool Camera z");
 
         const canvas = document.getElementById("canvas");
         const piecePoolHTML = document.getElementById("piece-pool");
@@ -36,8 +29,6 @@ export default class PiecePool {
         this.renderer.setScissorTest( true );
         this.controls = new OrbitControls(this.camera, this.renderer.domElement);
         this.controls.enableZoom = false;
-        // this.controls.enablePan = false;
-        // this.controls.enableRotate = false;
 
         //Populate the pool
         for (let i=0, dark = true; i<2; i++, dark = false) {
@@ -122,10 +113,7 @@ export default class PiecePool {
         dirLight.position.set(10,20,5);
         const pointLight = new THREE.PointLight(0xffffff, 1, 100, 2)
         pointLight.position.set(5,-10, 15);
-        // var gui = new dat.GUI();
-        // gui.add(pointLight.position, "x");
-        // gui.add(pointLight.position, "y");
-        // gui.add(pointLight.position, "z");
+        
         scene.add(ambientLight);
         scene.add(dirLight);
         scene.add(pointLight);

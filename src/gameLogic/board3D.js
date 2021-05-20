@@ -31,7 +31,6 @@ export default class Board3D extends Board {
     }
         
     initScene() {
-        // this.renderer.setSize( 400, 250 );
         const boardDiv = document.getElementById("board-container");
         boardDiv.append (this.renderer.domElement);
 
@@ -44,10 +43,6 @@ export default class Board3D extends Board {
         this.scene.background = new THREE.Color (0xffffff);
 
         this.camera.position.set(0.5, 4.345, -6);
-        // this.camera.position.set(-0.125, 5.345, -6);
-        // this.camera.position.set(1.275, 5.345, -5.725);
-        // this.camera.position.set(1.82195, 3.06664, -3.48534);
-        // this.camera.position.set(1.7018, 5.07284, -2.976548);
         
         this.init3DBoard();
 
@@ -62,11 +57,9 @@ export default class Board3D extends Board {
 
     init3DBoard() {
         const boxGeo = new THREE.BoxGeometry(6, 6, .5);
-        // const boxGeo = new BoxGeometry(6, 6, 0.1);
         const board = new THREE.Mesh(boxGeo, new THREE.MeshStandardMaterial({color: 0x800000}));
         board.rotateZ(Math.PI/4);
         board.position.set(0, 0, -.3501);
-        // board.position.set(0, 0, -.1001);
         board.receiveShadow = true;
         this.scene.add(board);
 
