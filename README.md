@@ -19,7 +19,7 @@ The game begins with an empty board. Play proceeds with the two players alternat
 Play begins with Player 2 selecting a piece for Player 1 to place. Once selected, the piece will appear in Player 1's Pieces to Play window. Player 1 then plays the piece by clicking a circle on the board. Player 1 next selects a piece for Player 2. Play continues in this fashion until one player forms a winning row/col/diag of 4 pieces or all the pieces have been played.
 
 ## AI Modes
-The game has two AI modes, Panda and Wise Owl. Panda is a novice player who chooses pieces and selects board spots randomly. Wise Owl plays a much smarter game, always making a winning move when available and never selecting a piece that would enable the human opponent to win if it can be avoided.
+The game has two AI modes, Panda and Wise Owl. Panda is a novice player who chooses pieces and selects board spots randomly. Wise Owl plays a much smarter game, always making a winning move when available and never selecting a piece that would enable a human opponent to win if it can be avoided.
 
 ## Graphics
 Players may rotate the board to get a better view by clicking on the board and moving the mouse:
