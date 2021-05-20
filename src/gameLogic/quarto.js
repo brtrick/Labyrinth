@@ -184,7 +184,7 @@ export default class Quarto {
             this.clickTimer = setTimeout(() => this.click = false, 300);
             return;
         }
-        // Else event must be pointerup
+        // Event must be pointerup
         if (!this.click) return;
         clearTimeout(this.clickTimer);
         this.click = false;
@@ -275,11 +275,11 @@ export default class Quarto {
         let idx = this.findWinningMove(this.selectedPiece);
         if (idx !== -1) return idx;
         
-        // If did not find a winning move,
+        // If no winning move, at least
         // find a move that does not set up opponent for win
         idx = Math.floor(Math.random() * 16);
         for (let i=0; i < 16; i++, idx = (idx + 1) % 16) {
-            if (this.board.board[idx] !== undefined) continue;
+            if (this.board.board[idx] !== undefined) continue; 
             this.board.board[idx] = this.selectedPiece;
             if (!this.nextPieceMustWin()) {
                 this.board.board[idx] = undefined;
@@ -287,6 +287,9 @@ export default class Quarto {
             }
             this.board.board[idx] = undefined;
         }
+
+        // If no winning move and no move to keep opponent from winning,
+        // the game is lost. Just choose a random move.
         return this.AIChooseBoardSpot1();
     }
 

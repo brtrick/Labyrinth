@@ -99,21 +99,19 @@ export default class PiecePool {
             const li = scene.userData.li;
             const index = li.dataset.idx;
             const rect = li.getBoundingClientRect();
-            const top = rect.top - ulRect.top + li.clientTop;
             const left = rect.left - ulRect.left + li.clientLeft;
             const width = li.clientWidth;
             const height = li.clientHeight;
             const margin = getComputedStyle(li);
-
-            this.renderer.setScissor(left, this.renderer.domElement.height - ((li.offsetHeight+parseInt(margin.marginTop)+parseInt(margin.marginBottom))  * (1+Math.floor(index/2))) + parseInt(margin.marginBottom) + li.clientTop, width, height);
-            this.renderer.setViewport(left, this.renderer.domElement.height - ((li.offsetHeight+parseInt(margin.marginTop)+parseInt(margin.marginBottom))  * (1+Math.floor(index/2))) + parseInt(margin.marginBottom) + li.clientTop, width, height);
-            // this.renderer.setScissor (left, this.renderer.domElement.height - height, width, height);
-            // this.renderer.setViewport(left, this.renderer.domElement.height - height, width, height);
+            const offsetRowHeight = (li.offsetHeight+parseInt(margin.marginTop)+parseInt(margin.marginBottom)) * (1+Math.floor(index/2));
+            const bottom = this.renderer.domElement.height - offsetRowHeight + parseInt(margin.marginBottom) + li.clientTop;
+            
+            this.renderer.setScissor(left, bottom, width, height);
+            this.renderer.setViewport(left, bottom, width, height);
             this.camera.aspect = width/height;
             this.camera.updateProjectionMatrix();
             this.controls.update();
             this.renderer.render( scene, this.camera );
-        
         }, this);
         this.animationID = requestAnimationFrame(this.animate);
     }
