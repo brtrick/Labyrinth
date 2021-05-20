@@ -1,6 +1,7 @@
 import PiecePool from "./piecePool";
 import Board3D from "./board3D";
 import {Raycaster, Vector2} from "three";
+import isEventSupported from "./isEventSupported";
 
 export default class Quarto {
     
@@ -15,6 +16,8 @@ export default class Quarto {
         this.AILevel = 1;
         this.currentPlayer = 1;
         this.opposingPlayer = 2;
+        this.click = false; // Used to determine mouse click vs drag
+        this.clickTimer = null;
 
         this.modal = document.getElementById("modal");
         this.modalSubmitButton = document.getElementById("modal-submit");
@@ -47,7 +50,7 @@ export default class Quarto {
         this.opposingPlayer = 2;
         this.body.classList.add("modal-open");
         this.modal.classList.remove("hidden"); 
-        this.resetButton.style.visibility = "hidden"
+        this.resetButton.style.visibility = "hidden";
     }
 
     // initializeModalRadioButtons and handlePlayer2ModalInput enable the 
@@ -154,8 +157,21 @@ export default class Quarto {
     }
 
     activateBoard () {
-        if (this.currentPlayer === 1 || this.AILevel === 0)
-            this.boardHTML.addEventListener("click", this.handleBoardClick);
+        if (this.currentPlayer === 1 || this.AILevel === 0) {
+            // Code modified from Wouter Coebergh, https://stackoverflow.com/questions/41181372/chrome-mousedown-and-mouseup-events-no-longer-working-other-browsers-are-fine/41238807#41238807
+            if (isEventSupported("onpointerdown")) {
+                this.boardHTML.addEventListener("pointerdown", this.handleBoardClick);
+                this.boardHTML.addEventListener("pointerup", this.handleBoardClick);
+            }
+            else if (isEventSupported("onmousedown")) {
+                this.boardHTML.addEventListener("mousedown", this.handleBoardClick);
+                this.boardHTML.addEventListener("mouseup", this.handleBoardClick);
+            }
+            else if (isEventSupported("ontouchstart")) {
+                this.boardHTML.addEventListener("ontouchstart", this.handleBoardClick);
+                this.boardHTML.addEventListener("ontouchend", this.handleBoardClick);
+            }
+        }
         else {
             const move = this['AIChooseBoardSpot' + this.AILevel]();
             this.makeMove(move);
@@ -163,6 +179,16 @@ export default class Quarto {
     }
 
     handleBoardClick (e) {
+        if (e.type === "pointerdown" || e.type === "mousedown" || e.type === "ontouchstart") {
+            this.click = true;
+            this.clickTimer = setTimeout(() => this.click = false, 300);
+            return;
+        }
+        // Else event must be pointerup
+        if (!this.click) return;
+        clearTimeout(this.clickTimer);
+        this.click = false;
+
         const raycaster = new Raycaster();
         const mouse = new Vector2();
         const size = new Vector2();
@@ -201,14 +227,38 @@ export default class Quarto {
         else {
             [this.currentPlayer, this.opposingPlayer] = [this.opposingPlayer, this.currentPlayer]; 
             printMessage(`${this['player' + this.opposingPlayer]}:\nSelect a piece for ${this['player' + this.currentPlayer]} to play`);
-            if (this.AILevel === 0 || this.currentPlayer === 2)
-                this.boardHTML.removeEventListener("click", this.handleBoardClick);
+            if (this.AILevel === 0 || this.currentPlayer === 2) {
+                if (isEventSupported("onpointerdown")) {
+                    this.boardHTML.removeEventListener("pointerdown", this.handleBoardClick);
+                    this.boardHTML.removeEventListener("pointerup", this.handleBoardClick);                
+                }
+                else if (isEventSupported("onmousedown")) {
+                    this.boardHTML.removeEventListener("mousedown", this.handleBoardClick);
+                    this.boardHTML.removeEventListener("mouseup", this.handleBoardClick);
+                }
+                else if (isEventSupported("ontouchstart")) {
+                    this.boardHTML.removeEventListener("ontouchstart", this.handleBoardClick);
+                    this.boardHTML.removeEventListener("ontouchend", this.handleBoardClick);
+                }
+            }
             this.activatePiecePool();
             return;
         }
         
-        if (this.AILevel === 0 || this.currentPlayer === 1)
-            this.boardHTML.removeEventListener('click', this.handleBoardClick);
+        if (this.AILevel === 0 || this.currentPlayer === 1) {
+            if (isEventSupported("onpointerdown")) {
+                this.boardHTML.removeEventListener("pointerdown", this.handleBoardClick);
+                this.boardHTML.removeEventListener("pointerup", this.handleBoardClick);                
+            }
+            else if (isEventSupported("onmousedown")) {
+                this.boardHTML.removeEventListener("mousedown", this.handleBoardClick);
+                this.boardHTML.removeEventListener("mouseup", this.handleBoardClick);
+            }
+            else if (isEventSupported("ontouchstart")) {
+                this.boardHTML.removeEventListener("ontouchstart", this.handleBoardClick);
+                this.boardHTML.removeEventListener("ontouchend", this.handleBoardClick);
+            }        
+        }
         this.resetButton.style.visibility = "visible";
     }
 
