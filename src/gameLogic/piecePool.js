@@ -32,13 +32,13 @@ export default class PiecePool {
 
         //Populate the pool
         for (let i=0, dark = true; i<2; i++, dark = false) {
-            for (let j=0, box = true; j<2; j++, box = false ) {
-                 for (let k=0, hollow = true; k<2; k++, hollow = false) {
-                       for (let l=0, tall = true; l<2; l++, tall = false) {
-                             this.pool[i*8+j*4+k*2+l]= new Piece(dark, box, hollow, tall);
-                       }
-                  }
-             }
+          for (let j=0, box = true; j<2; j++, box = false ) {
+            for (let k=0, hollow = true; k<2; k++, hollow = false) {
+              for (let l=0, tall = true; l<2; l++, tall = false) {
+                this.pool[i*8+j*4+k*2+l]= new Piece(dark, box, hollow, tall);
+              }
+            }
+          }
         }
 
         this.animate = this.animate.bind(this);
