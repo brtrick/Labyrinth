@@ -13,16 +13,15 @@ export default class Board {
 
   isGameTie() {
     // Assumes game has already checked for win
-    if (this.numMoves === 16) {
-        return true;
-    }
-    return false;
+    return this.numMoves === 16
   }
 
   isGameWon (move) {
-    if (this.rowWinner(move)) return true;
-    if (this.columnWinner(move)) return true;
-    return this.diagonalWinner(move);
+    return (
+      this.rowWinner(move) ||
+      this.columnWinner(move) ||
+      this.diagonalWinner(move)
+    );
   }
 
   rowWinner(move) {
