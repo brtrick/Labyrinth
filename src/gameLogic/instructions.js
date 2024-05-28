@@ -19,27 +19,27 @@ export default class Instructions {
         };
         this.prev = null;
 
-        this.setup.element.addEventListener("click", (e) => {
-            this.processClick(e, "setup");
+        this.setup.element.addEventListener("click", () => {
+            this.processClick("setup");
         });
-        this.objective.element.addEventListener("click", (e) => {
-            this.processClick(e, "objective");
+        this.objective.element.addEventListener("click", () => {
+            this.processClick("objective");
         });
-        this.gamePlay.element.addEventListener("click", (e) => {
-            this.processClick(e, "gamePlay");
+        this.gamePlay.element.addEventListener("click", () => {
+            this.processClick("gamePlay");
         });
-        this.gameMechanics.element.addEventListener("click", (e) => {
-            this.processClick(e, "gameMechanics");
+        this.gameMechanics.element.addEventListener("click", () => {
+            this.processClick("gameMechanics");
         });
     }
     
-    processClick (e, field) {
+    processClick (field) {
         if (this[field].hidden) {
             // Only allow one open bullet at a time
             if (this.prev != null) {
-                //Change the arrow
+                // Change the arrow
                 this[this.prev].element.children[0].children[0].classList.replace("down-arrow","left-arrow");
-                //Hide the instructions
+                // Hide the instructions
                 this[this.prev].element.children[1].classList.add("hidden");
                 this[this.prev].hidden = true;
             }
@@ -50,9 +50,9 @@ export default class Instructions {
             this.prev = field;
         }
         else {
-            //Change the arrow
+            // Change the arrow
             this[field].element.children[0].children[0].classList.replace("down-arrow","left-arrow");
-            //Hide the instructions
+            // Hide the instructions
             this[field].element.children[1].classList.add("hidden");
             this.prev = null;
         }
