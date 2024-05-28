@@ -17,7 +17,6 @@
     "build": "NODE_ENV=production webpack --config webpack.prod.js"
   },
   "author": "Bradley Trick",
-  "license": "ISC",
   "devDependencies": {
     "@babel/core": "^7.13.14",
     "@babel/plugin-proposal-optional-chaining": "^7.13.12",
