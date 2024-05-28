@@ -40,7 +40,7 @@ export default class Quarto {
     this.activatePiecePool();
   }
 
-  resetGame(e) {
+  resetGame() {
     this.board.reset();
     this.piecePool.reset(); 
     this.currentPlayer = 1;
@@ -71,7 +71,7 @@ export default class Quarto {
     humanNameInput.style.visibility = humanRadioButton.checked ? "visible" : "hidden";
   }
 
-  handleModalSubmit (e) {
+  handleModalSubmit () {
     let player1Input = document.getElementById("player1-input").value;
     player1Input = (player1Input === "" ? "Player 1" : player1Input);
     this.player1 = player1Input;
