@@ -13,7 +13,7 @@ export default class Board {
 
   isGameTie() {
     // Assumes game has already checked for win
-    return this.numMoves === 16
+    return this.numMoves === 16;
   }
 
   isGameWon (move) {
